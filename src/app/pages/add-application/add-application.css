@@ -1,0 +1,52 @@
+.form-page {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+h1 {
+  margin-bottom: 8px;
+}
+
+.subtitle {
+  color: #6b7280;
+  margin-bottom: 32px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+input,
+select,
+textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+textarea {
+  resize: vertical;
+}
+
+button {
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  background: #111827;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+button:hover {
+  opacity: 0.9;
+}

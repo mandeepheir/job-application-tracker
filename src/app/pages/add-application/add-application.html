@@ -1,0 +1,129 @@
+
+<div class="form-page">
+
+  <h1>Add Job Application</h1>
+
+  <p class="subtitle">
+    Add a new job application to your tracker.
+  </p>
+
+  <form (ngSubmit)="addApplication()">
+
+    <div class="form-group">
+      <label for="company">Company</label>
+
+      <input
+        id="company"
+        type="text"
+        placeholder="e.g. Google"
+        name="company"
+        [(ngModel)]="application.company"
+      />
+    </div>
+
+
+    <div class="form-group">
+      <label for="jobTitle">Job Title</label>
+
+      <input
+        id="jobTitle"
+        type="text"
+        placeholder="e.g. Software Developer"
+        name="jobTitle"
+        [(ngModel)]="application.jobTitle"
+      />
+    </div>
+
+
+    <div class="form-group">
+      <label for="location">Location</label>
+
+      <input
+        id="location"
+        type="text"
+        placeholder="e.g. Toronto, Canada"
+        name="location"
+        [(ngModel)]="application.location"
+      />
+    </div>
+
+
+    <div class="form-group">
+      <label for="jobUrl">Job URL</label>
+
+      <input
+        id="jobUrl"
+        type="url"
+        placeholder="https://..."
+        name="jobUrl"
+        [(ngModel)]="application.jobUrl"
+      />
+    </div>
+
+
+    <div class="form-group">
+      <label for="applicationDate">Application Date</label>
+
+      <input
+        id="applicationDate"
+        type="date"
+        name="applicationDate"
+        [(ngModel)]="application.applicationDate"
+      />
+    </div>
+
+
+    <div class="form-group">
+      <label for="status">Status</label>
+
+      <select
+        id="status"
+        name="status"
+        [(ngModel)]="application.status"
+      >
+        <option value="Applied">Applied</option>
+        <option value="Interview">Interview</option>
+        <option value="Technical">Technical Interview</option>
+        <option value="Offer">Offer</option>
+        <option value="Rejected">Rejected</option>
+      </select>
+    </div>
+
+
+    <div class="form-group">
+      <label for="jobType">Job Type</label>
+
+      <select
+        id="jobType"
+        name="jobType"
+        [(ngModel)]="application.jobType"
+      >
+        <option value="Full-time">Full-time</option>
+        <option value="Part-time">Part-time</option>
+        <option value="Internship">Internship</option>
+        <option value="Contract">Contract</option>
+      </select>
+    </div>
+
+
+    <div class="form-group">
+      <label for="notes">Notes</label>
+
+      <textarea
+        id="notes"
+        name="notes"
+        rows="5"
+        placeholder="Add notes about this application..."
+        [(ngModel)]="application.notes"
+      ></textarea>
+    </div>
+
+
+    <button type="submit">
+      Add Application
+    </button>
+
+  </form>
+
+</div>
+

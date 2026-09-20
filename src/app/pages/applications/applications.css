@@ -1,0 +1,108 @@
+
+.applications-page {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
+}
+
+.page-header h1 {
+  margin-bottom: 8px;
+}
+
+.page-header p {
+  margin: 0;
+  color: #6b7280;
+}
+
+.add-button {
+  display: inline-block;
+  padding: 10px 16px;
+  background: #111827;
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: 500;
+}
+
+.add-button:hover {
+  opacity: 0.9;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 80px 20px;
+  border: 1px dashed #d1d5db;
+  border-radius: 12px;
+}
+
+.empty-state p {
+  color: #6b7280;
+  margin-bottom: 24px;
+}
+
+.applications-list {
+  display: grid;
+  gap: 20px;
+}
+
+.application-card {
+  padding: 24px;
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+}
+
+.application-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.application-header h2 {
+  margin: 0 0 6px;
+}
+
+.company {
+  margin: 0;
+  color: #6b7280;
+}
+
+.status {
+  padding: 6px 12px;
+  background: #f3f4f6;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.application-details {
+  margin-top: 20px;
+}
+
+.application-details p {
+  margin: 8px 0;
+}
+
+.notes {
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.notes p {
+  color: #6b7280;
+}
+
+.job-link {
+  display: inline-block;
+  margin-top: 16px;
+  color: #111827;
+  font-weight: 600;
+}
