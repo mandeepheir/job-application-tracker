@@ -3,13 +3,14 @@
   margin: 0 auto;
 }
 
-h1 {
-  margin-bottom: 8px;
+.form-page h1 {
+  margin: 0 0 8px;
+  font-size: 32px;
 }
 
 .subtitle {
   color: #6b7280;
-  margin-bottom: 32px;
+  margin: 0 0 32px;
 }
 
 .form-group {
@@ -30,7 +31,16 @@ textarea {
   border: 1px solid #d1d5db;
   border-radius: 8px;
   font-size: 16px;
+  font-family: inherit;
   box-sizing: border-box;
+  background: #ffffff;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: #111827;
 }
 
 textarea {
@@ -44,9 +54,28 @@ button {
   background: #111827;
   color: white;
   font-size: 16px;
+  font-weight: 600;
   cursor: pointer;
 }
 
 button:hover {
   opacity: 0.9;
+}
+
+@media (max-width: 600px) {
+
+  .form-page h1 {
+    font-size: 28px;
+  }
+
+  input,
+  select,
+  textarea {
+    font-size: 16px;
+  }
+
+  button {
+    width: 100%;
+  }
+
 }

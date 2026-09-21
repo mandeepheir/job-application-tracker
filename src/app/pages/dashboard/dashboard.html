@@ -1,31 +1,119 @@
 <div class="dashboard">
 
-  <h1>Job Application Tracker</h1>
+  <div class="dashboard-header">
 
-  <p class="subtitle">
-    Track your job applications and stay organized.
-  </p>
+    <div>
+      <h1>Dashboard</h1>
+
+      <p>
+        Track your job search and stay organized.
+      </p>
+    </div>
+
+    <a
+      routerLink="/add-application"
+      class="add-button"
+    >
+      + Add Application
+    </a>
+
+  </div>
+
 
   <div class="stats-grid">
 
     <div class="stat-card">
-      <h2>0</h2>
-      <p>Total Applications</p>
+
+      <div class="stat-icon">
+        📋
+      </div>
+
+      <div>
+        <h2>0</h2>
+        <p>Total Applications</p>
+      </div>
+
     </div>
 
-    <div class="stat-card">
-      <h2>0</h2>
-      <p>Interviews</p>
-    </div>
 
     <div class="stat-card">
-      <h2>0</h2>
-      <p>Offers</p>
+
+      <div class="stat-icon">
+        📞
+      </div>
+
+      <div>
+        <h2>0</h2>
+        <p>Interviews</p>
+      </div>
+
     </div>
 
+
     <div class="stat-card">
-      <h2>0</h2>
-      <p>Rejected</p>
+
+      <div class="stat-icon">
+        🎯
+      </div>
+
+      <div>
+        <h2>0</h2>
+        <p>Offers</p>
+      </div>
+
+    </div>
+
+
+    <div class="stat-card">
+
+      <div class="stat-icon">
+        ❌
+      </div>
+
+      <div>
+        <h2>0</h2>
+        <p>Rejected</p>
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <div class="dashboard-section">
+
+    <div class="section-header">
+
+      <div>
+        <h2>Recent Applications</h2>
+
+        <p>
+          Your latest job applications.
+        </p>
+      </div>
+
+      <a routerLink="/applications">
+        View All
+      </a>
+
+    </div>
+
+
+    <div class="recent-empty">
+
+      <h3>No applications yet</h3>
+
+      <p>
+        Add your first job application to start tracking your job search.
+      </p>
+
+      <a
+        routerLink="/add-application"
+        class="add-button"
+      >
+        Add Application
+      </a>
+
     </div>
 
   </div>
