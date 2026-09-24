@@ -1,9 +1,15 @@
 <div class="form-page">
 
-  <h1>Add Job Application</h1>
+  <h1>
+    {{ editIndex !== null ? 'Edit Job Application' : 'Add Job Application' }}
+  </h1>
 
   <p class="subtitle">
-    Add a new job application to your tracker.
+    {{
+      editIndex !== null
+        ? 'Update your job application details.'
+        : 'Add a new job application to your tracker.'
+    }}
   </p>
 
 
@@ -202,7 +208,7 @@
 
     <!-- Submit -->
     <button type="submit">
-      Add Application
+      {{ editIndex !== null ? 'Save Changes' : 'Add Application' }}
     </button>
 
   </form>

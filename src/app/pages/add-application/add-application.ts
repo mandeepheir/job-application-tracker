@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
-import {Router} from '@angular/router';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Application } from '../../models/application';
 
 @Component({
@@ -9,9 +9,7 @@ import { Application } from '../../models/application';
   templateUrl: './add-application.html',
   styleUrl: './add-application.css'
 })
-export class AddApplication {
-  constructor(private router: Router) {}
-
+export class AddApplication implements OnInit {
 
   application: Application = {
     company: '',
@@ -26,6 +24,48 @@ export class AddApplication {
 
   companyError = '';
   jobTitleError = '';
+
+  editIndex: number | null = null;
+
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute
+  ) {}
+
+  ngOnInit() {
+
+    this.route.queryParams.subscribe(params => {
+
+      if (params['edit'] !== undefined) {
+
+        this.editIndex = Number(params['edit']);
+
+        const savedApplications =
+          localStorage.getItem('applications');
+
+        if (savedApplications) {
+
+          const applications: Application[] =
+            JSON.parse(savedApplications);
+
+          if (
+            this.editIndex >= 0 &&
+            this.editIndex < applications.length
+          ) {
+
+            this.application = {
+              ...applications[this.editIndex]
+            };
+
+          }
+
+        }
+
+      }
+
+    });
+
+  }
 
   addApplication() {
 
@@ -47,27 +87,27 @@ export class AddApplication {
     const existingApplications =
       JSON.parse(localStorage.getItem('applications') || '[]');
 
-    existingApplications.push({
-      ...this.application
-    });
+    if (this.editIndex !== null) {
+
+      existingApplications[this.editIndex] = {
+        ...this.application
+      };
+
+    } else {
+
+      existingApplications.push({
+        ...this.application
+      });
+
+    }
 
     localStorage.setItem(
       'applications',
       JSON.stringify(existingApplications)
     );
 
-    console.log('Application saved:', this.application);
-    this.application = {
-  company: '',
-  jobTitle: '',
-  location: '',
-  jobUrl: '',
-  applicationDate: '',
-  status: 'Applied',
-  jobType: 'Full-time',
-  notes: ''
-};
     this.router.navigate(['/applications']);
+
   }
 
 }

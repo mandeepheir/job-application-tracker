@@ -1,4 +1,3 @@
-
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { Application } from '../../models/application';
@@ -20,10 +19,27 @@ export class Applications {
 
     if (savedApplications) {
       this.applications = JSON.parse(savedApplications);
-      console.log('Loaded applications from localStorage:', this.applications);
     }
 
   }
 
-}
+  deleteApplication(index: number) {
 
+    const confirmed = confirm(
+      'Are you sure you want to delete this application?'
+    );
+
+    if (!confirmed) {
+      return;
+    }
+
+    this.applications.splice(index, 1);
+
+    localStorage.setItem(
+      'applications',
+      JSON.stringify(this.applications)
+    );
+
+  }
+
+}
