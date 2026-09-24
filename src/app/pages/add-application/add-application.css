@@ -79,3 +79,13 @@ button:hover {
   }
 
 }
+.error-message {
+  margin: 6px 0 0;
+  color: #dc2626;
+  font-size: 14px;
+}
+.error-message {
+  margin: 6px 0 0;
+  font-size: 14px;
+  color: #dc2626;
+}
