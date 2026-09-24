@@ -1,126 +1,141 @@
-import { Component } from '@angular/core';
-import {FormsModule} from '@angular/forms';
-import { RouterLink } from '@angular/router';
+
+import { Component, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+
 import { Application } from '../../models/application';
+import { FirestoreService } from '../../services/firestore';
 
 @Component({
-  selector: 'app-applications',
-  imports: [FormsModule, RouterLink],
-  templateUrl: './applications.html',
-  styleUrl: './applications.css'
+  selector: 'app-add-application',
+  imports: [FormsModule],
+  templateUrl: './add-application.html',
+  styleUrl: './add-application.css'
 })
-export class Applications {
+export class AddApplication implements OnInit {
 
-  applications: Application[] = [];
+  application: Application = {
+    company: '',
+    jobTitle: '',
+    location: '',
+    jobUrl: '',
+    applicationDate: '',
+    status: 'Applied',
+    jobType: 'Full-time',
+    notes: ''
+  };
 
-  filteredApplications: Application[] = [];
+  companyError = '';
+  jobTitleError = '';
 
-  searchTerm = '';
+  editId: string | null = null;
 
-  selectedStatus = '';
-
-  selectedJobType = '';
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private firestoreService: FirestoreService
+  ) {}
 
   ngOnInit() {
 
-    const savedApplications =
-      localStorage.getItem('applications');
+    this.route.queryParams.subscribe(params => {
 
-    if (savedApplications) {
+      if (params['edit']) {
 
-      this.applications = JSON.parse(savedApplications);
+        this.editId = params['edit'];
 
-    }
+        this.firestoreService
+          .getApplications()
+          .subscribe({
+            next: (applications) => {
 
-    this.filterApplications();
+              const applicationToEdit =
+                applications.find(
+                  application =>
+                    application.id === this.editId
+                );
 
-  }
+              if (applicationToEdit) {
 
+                this.application = {
+                  ...applicationToEdit
+                };
 
-  filterApplications() {
+              }
 
-    this.filteredApplications = this.applications.filter(
-      application => {
+            },
 
-        const matchesSearch =
-          application.company
-            .toLowerCase()
-            .includes(this.searchTerm.toLowerCase()) ||
+            error: (error) => {
 
-          application.jobTitle
-            .toLowerCase()
-            .includes(this.searchTerm.toLowerCase());
+              console.error(
+                'Error loading application:',
+                error
+              );
 
+            }
 
-        const matchesStatus =
-          !this.selectedStatus ||
-          application.status === this.selectedStatus;
-
-
-        const matchesJobType =
-          !this.selectedJobType ||
-          application.jobType === this.selectedJobType;
-
-
-        return (
-          matchesSearch &&
-          matchesStatus &&
-          matchesJobType
-        );
+          });
 
       }
-    );
+
+    });
 
   }
 
+  async addApplication() {
 
-  clearFilters() {
+    this.companyError = '';
+    this.jobTitleError = '';
 
-    this.searchTerm = '';
+    if (!this.application.company.trim()) {
+      this.companyError =
+        'Company name is required.';
+    }
 
-    this.selectedStatus = '';
+    if (!this.application.jobTitle.trim()) {
+      this.jobTitleError =
+        'Job title is required.';
+    }
 
-    this.selectedJobType = '';
-
-    this.filterApplications();
-
-  }
-
-
-  deleteApplication(index: number) {
-
-    const confirmed = confirm(
-      'Are you sure you want to delete this application?'
-    );
-
-    if (!confirmed) {
+    if (this.companyError || this.jobTitleError) {
       return;
     }
 
+    try {
 
-    const applicationToDelete =
-      this.filteredApplications[index];
+      if (this.editId) {
 
+        await this.firestoreService.updateApplication(
+          this.editId,
+          this.application
+        );
 
-    const originalIndex =
-      this.applications.indexOf(applicationToDelete);
+      } else {
 
+        await this.firestoreService.addApplication(
+          this.application
+        );
 
-    if (originalIndex !== -1) {
+      }
 
-      this.applications.splice(originalIndex, 1);
+      this.router.navigate([
+        '/applications'
+      ]);
+
+    } catch (error) {
+
+      console.error(
+        'Error saving application:',
+        error
+      );
+
+      alert(
+        'There was a problem saving the application.'
+      );
 
     }
-
-
-    localStorage.setItem(
-      'applications',
-      JSON.stringify(this.applications)
-    );
-
-
-    this.filterApplications();
 
   }
 
 }
+

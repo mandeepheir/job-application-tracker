@@ -1,7 +1,10 @@
+
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+
 import { Application } from '../../models/application';
+import { FirestoreService } from '../../services/firestore';
 
 @Component({
   selector: 'app-add-application',
@@ -29,7 +32,8 @@ export class AddApplication implements OnInit {
 
   constructor(
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private firestoreService: FirestoreService
   ) {}
 
   ngOnInit() {
@@ -67,7 +71,7 @@ export class AddApplication implements OnInit {
 
   }
 
-  addApplication() {
+  async addApplication() {
 
     this.companyError = '';
     this.jobTitleError = '';
@@ -84,30 +88,51 @@ export class AddApplication implements OnInit {
       return;
     }
 
-    const existingApplications =
-      JSON.parse(localStorage.getItem('applications') || '[]');
+    try {
 
-    if (this.editIndex !== null) {
+      if (this.editIndex !== null) {
 
-      existingApplications[this.editIndex] = {
-        ...this.application
-      };
+        const savedApplications =
+          JSON.parse(
+            localStorage.getItem('applications') || '[]'
+          );
 
-    } else {
+        const existingApplication =
+          savedApplications[this.editIndex];
 
-      existingApplications.push({
-        ...this.application
-      });
+        if (existingApplication?.id) {
+
+          await this.firestoreService.updateApplication(
+            existingApplication.id,
+            this.application
+          );
+
+        }
+
+      } else {
+
+        await this.firestoreService.addApplication(
+          this.application
+        );
+
+      }
+
+      this.router.navigate(['/applications']);
+
+    } catch (error) {
+
+      console.error(
+        'Error saving application:',
+        error
+      );
+
+      alert(
+        'There was a problem saving the application.'
+      );
 
     }
-
-    localStorage.setItem(
-      'applications',
-      JSON.stringify(existingApplications)
-    );
-
-    this.router.navigate(['/applications']);
 
   }
 
 }
+

@@ -1,3 +1,4 @@
+
 <div class="applications-page">
 
   <div class="page-header">
@@ -11,7 +12,6 @@
       </p>
 
     </div>
-
 
     <a
       routerLink="/add-application"
@@ -201,7 +201,7 @@
 
       @for (
         application of filteredApplications;
-        track $index
+        track application.id
       ) {
 
         <div class="application-card">
@@ -219,7 +219,6 @@
               </p>
 
             </div>
-
 
             <span class="status">
               {{ application.status }}
@@ -282,7 +281,7 @@
             <a
               [routerLink]="['/add-application']"
               [queryParams]="{
-                edit: applications.indexOf(application)
+                edit: application.id
               }"
               class="edit-button"
             >
@@ -309,3 +308,4 @@
   }
 
 </div>
+

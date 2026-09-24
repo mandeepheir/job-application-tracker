@@ -1,4 +1,6 @@
 export interface Application {
+  id?: string;
+
   company: string;
   jobTitle: string;
   location: string;
