@@ -1,14 +1,19 @@
 <div class="dashboard">
 
+  <!-- Header -->
+
   <div class="dashboard-header">
 
     <div>
+
       <h1>Dashboard</h1>
 
       <p>
         Track your job search and stay organized.
       </p>
+
     </div>
+
 
     <a
       routerLink="/add-application"
@@ -20,7 +25,11 @@
   </div>
 
 
+  <!-- Statistics -->
+
   <div class="stats-grid">
+
+    <!-- Total Applications -->
 
     <div class="stat-card">
 
@@ -29,12 +38,21 @@
       </div>
 
       <div>
-        <h2>0</h2>
-        <p>Total Applications</p>
+
+        <h2>
+          {{ totalApplications }}
+        </h2>
+
+        <p>
+          Total Applications
+        </p>
+
       </div>
 
     </div>
 
+
+    <!-- Interviews -->
 
     <div class="stat-card">
 
@@ -43,12 +61,21 @@
       </div>
 
       <div>
-        <h2>0</h2>
-        <p>Interviews</p>
+
+        <h2>
+          {{ interviews }}
+        </h2>
+
+        <p>
+          Interviews
+        </p>
+
       </div>
 
     </div>
 
+
+    <!-- Offers -->
 
     <div class="stat-card">
 
@@ -57,12 +84,21 @@
       </div>
 
       <div>
-        <h2>0</h2>
-        <p>Offers</p>
+
+        <h2>
+          {{ offers }}
+        </h2>
+
+        <p>
+          Offers
+        </p>
+
       </div>
 
     </div>
 
+
+    <!-- Rejected -->
 
     <div class="stat-card">
 
@@ -71,8 +107,15 @@
       </div>
 
       <div>
-        <h2>0</h2>
-        <p>Rejected</p>
+
+        <h2>
+          {{ rejected }}
+        </h2>
+
+        <p>
+          Rejected
+        </p>
+
       </div>
 
     </div>
@@ -80,17 +123,24 @@
   </div>
 
 
+  <!-- Recent Applications -->
+
   <div class="dashboard-section">
 
     <div class="section-header">
 
       <div>
-        <h2>Recent Applications</h2>
+
+        <h2>
+          Recent Applications
+        </h2>
 
         <p>
           Your latest job applications.
         </p>
+
       </div>
+
 
       <a routerLink="/applications">
         View All
@@ -99,22 +149,78 @@
     </div>
 
 
-    <div class="recent-empty">
+    <!-- No applications -->
 
-      <h3>No applications yet</h3>
+    @if (applications.length === 0) {
 
-      <p>
-        Add your first job application to start tracking your job search.
-      </p>
+      <div class="recent-empty">
 
-      <a
-        routerLink="/add-application"
-        class="add-button"
-      >
-        Add Application
-      </a>
+        <h3>
+          No applications yet
+        </h3>
 
-    </div>
+        <p>
+          Add your first job application to start
+          tracking your job search.
+        </p>
+
+        <a
+          routerLink="/add-application"
+          class="add-button"
+        >
+          Add Application
+        </a>
+
+      </div>
+
+    }
+
+
+    <!-- Recent applications -->
+
+    @if (applications.length > 0) {
+
+      <div class="recent-applications">
+
+        @for (
+          application of getRecentApplications();
+          track $index
+        ) {
+
+          <div class="recent-application-card">
+
+            <div>
+
+              <h3>
+                {{ application.jobTitle }}
+              </h3>
+
+              <p>
+                {{ application.company }}
+              </p>
+
+            </div>
+
+
+            <div class="recent-application-right">
+
+              <span class="status">
+                {{ application.status }}
+              </span>
+
+              <span class="job-type">
+                {{ application.jobType }}
+              </span>
+
+            </div>
+
+          </div>
+
+        }
+
+      </div>
+
+    }
 
   </div>
 
