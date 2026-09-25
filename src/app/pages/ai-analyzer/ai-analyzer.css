@@ -315,6 +315,21 @@ textarea:focus {
 }
 
 
+/* Result Description */
+
+.result-description {
+
+  margin: -4px 0 16px;
+
+  color: #6b7280;
+
+  font-size: 14px;
+
+  line-height: 1.6;
+
+}
+
+
 /* Experience */
 
 .experience-value {
@@ -344,14 +359,15 @@ textarea:focus {
 
 }
 
-
 .skill-tag,
 
 .keyword-tag,
 
 .matched-tag,
 
-.missing-tag {
+.missing-tag,
+
+.resume-keyword-tag {
 
   display: inline-block;
 
@@ -388,7 +404,7 @@ textarea:focus {
 }
 
 
-/* Matching Skills */
+/* Skills You Have */
 
 .matched-tag {
 
@@ -399,13 +415,24 @@ textarea:focus {
 }
 
 
-/* Missing Skills */
+/* Skills To Learn */
 
 .missing-tag {
 
   background: #fee2e2;
 
   color: #991b1b;
+
+}
+
+
+/* Resume Keywords */
+
+.resume-keyword-tag {
+
+  background: #fef3c7;
+
+  color: #92400e;
 
 }
 

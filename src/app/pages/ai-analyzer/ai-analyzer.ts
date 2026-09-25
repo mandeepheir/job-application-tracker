@@ -8,6 +8,8 @@ interface AnalysisResult {
 
   keywords: string[];
 
+  resumeKeywords: string[];
+
   experience: string;
 
   responsibilities: string[];
@@ -36,10 +38,7 @@ export class AiAnalyzer {
 
 
   /*
-   * Your current skill set.
-   *
-   * We will improve this later by
-   * loading skills from the user's profile.
+   * Your current skills.
    */
 
   mySkills = [
@@ -81,6 +80,116 @@ export class AiAnalyzer {
   ];
 
 
+  /*
+   * Technical and professional terms
+   * that can be useful as resume keywords.
+   */
+
+  possibleResumeKeywords = [
+
+    'javascript',
+
+    'typescript',
+
+    'angular',
+
+    'react',
+
+    'vue',
+
+    'html',
+
+    'css',
+
+    'python',
+
+    'java',
+
+    'c++',
+
+    'c#',
+
+    'sql',
+
+    'mongodb',
+
+    'firebase',
+
+    'node.js',
+
+    'node',
+
+    'express',
+
+    'git',
+
+    'github',
+
+    'docker',
+
+    'kubernetes',
+
+    'aws',
+
+    'azure',
+
+    'gcp',
+
+    'machine learning',
+
+    'artificial intelligence',
+
+    'ai',
+
+    'data structures',
+
+    'algorithms',
+
+    'rest api',
+
+    'api',
+
+    'spring boot',
+
+    'full stack',
+
+    'frontend',
+
+    'backend',
+
+    'web development',
+
+    'software development',
+
+    'problem solving',
+
+    'teamwork',
+
+    'communication',
+
+    'agile',
+
+    'scrum',
+
+    'testing',
+
+    'debugging',
+
+    'cloud',
+
+    'database',
+
+    'deployment',
+
+    'performance',
+
+    'scalable',
+
+    'responsive design'
+
+  ];
+
+
   analyzeJob() {
 
     if (!this.jobDescription.trim()) {
@@ -100,8 +209,7 @@ export class AiAnalyzer {
 
 
       /*
-       * Detect skills mentioned
-       * in the job description.
+       * Detect technical skills.
        */
 
       const possibleSkills = [
@@ -231,7 +339,20 @@ export class AiAnalyzer {
 
 
       /*
-       * Detect required experience.
+       * Resume keywords combine
+       * technical skills and important
+       * professional keywords.
+       */
+
+      const resumeKeywords =
+        this.possibleResumeKeywords.filter(
+          keyword =>
+            text.includes(keyword)
+        );
+
+
+      /*
+       * Detect experience requirement.
        */
 
       const experienceMatch =
@@ -257,8 +378,7 @@ export class AiAnalyzer {
 
 
       /*
-       * Find skills that match
-       * your current skills.
+       * Find skills you already have.
        */
 
       const matchedSkills =
@@ -269,8 +389,8 @@ export class AiAnalyzer {
 
 
       /*
-       * Find skills required by the job
-       * that you currently do not have.
+       * Find skills you don't currently
+       * have in your skill list.
        */
 
       const missingSkills =
@@ -281,7 +401,7 @@ export class AiAnalyzer {
 
 
       /*
-       * Calculate match percentage.
+       * Calculate match score.
        */
 
       let matchScore = 0;
@@ -301,7 +421,7 @@ export class AiAnalyzer {
 
 
       /*
-       * Store the complete analysis.
+       * Store complete analysis.
        */
 
       this.analysisResult = {
@@ -316,6 +436,12 @@ export class AiAnalyzer {
           foundKeywords.length > 0
             ? foundKeywords
             : ['No specific keywords detected'],
+
+
+        resumeKeywords:
+          resumeKeywords.length > 0
+            ? resumeKeywords
+            : ['No relevant resume keywords detected'],
 
 
         experience,
