@@ -1,0 +1,239 @@
+<div class="details-page">
+
+  @if (application) {
+
+    <!-- Header -->
+
+    <div class="details-header">
+
+      <div>
+
+        <a
+          routerLink="/applications"
+          class="back-link"
+        >
+          ← Back to Applications
+        </a>
+
+        <h1>
+          {{ application.jobTitle }}
+        </h1>
+
+        <p class="company">
+          {{ application.company }}
+        </p>
+
+      </div>
+
+      <span class="status">
+        {{ application.status }}
+      </span>
+
+    </div>
+
+
+    <!-- Main Content -->
+
+    <div class="details-grid">
+
+      <!-- Application Information -->
+
+      <div class="details-card">
+
+        <h2>
+          Application Details
+        </h2>
+
+        <div class="detail-list">
+
+          <div class="detail-item">
+
+            <span class="detail-label">
+              Location
+            </span>
+
+            <span class="detail-value">
+              {{ application.location || 'Not specified' }}
+            </span>
+
+          </div>
+
+
+          <div class="detail-item">
+
+            <span class="detail-label">
+              Job Type
+            </span>
+
+            <span class="detail-value">
+              {{ application.jobType }}
+            </span>
+
+          </div>
+
+
+          <div class="detail-item">
+
+            <span class="detail-label">
+              Application Date
+            </span>
+
+            <span class="detail-value">
+              {{ application.applicationDate || 'Not specified' }}
+            </span>
+
+          </div>
+
+
+          <div class="detail-item">
+
+            <span class="detail-label">
+              Deadline
+            </span>
+
+            <span class="detail-value">
+              {{ application.deadline || 'No deadline' }}
+            </span>
+
+          </div>
+
+
+          <div class="detail-item">
+
+            <span class="detail-label">
+              Priority
+            </span>
+
+            <span
+              class="priority"
+              [class.high]="application.priority === 'High'"
+              [class.medium]="application.priority === 'Medium'"
+              [class.low]="application.priority === 'Low'"
+            >
+              {{ application.priority }}
+            </span>
+
+          </div>
+
+
+          <div class="detail-item">
+
+            <span class="detail-label">
+              Status
+            </span>
+
+            <span class="detail-value">
+              {{ application.status }}
+            </span>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- Notes -->
+
+      <div class="details-card">
+
+        <h2>
+          Notes
+        </h2>
+
+        @if (application.notes) {
+
+          <p class="notes">
+            {{ application.notes }}
+          </p>
+
+        } @else {
+
+          <p class="empty-text">
+            No notes have been added for this application.
+          </p>
+
+        }
+
+      </div>
+
+
+      <!-- Job Posting -->
+
+      <div class="details-card">
+
+        <h2>
+          Job Posting
+        </h2>
+
+        @if (application.jobUrl) {
+
+          <a
+            [href]="application.jobUrl"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="job-link"
+          >
+            View Original Job Posting →
+          </a>
+
+        } @else {
+
+          <p class="empty-text">
+            No job posting URL was added.
+          </p>
+
+        }
+
+      </div>
+
+
+      <!-- Actions -->
+
+      <div class="details-actions">
+
+        <a
+          [routerLink]="['/add-application']"
+          [queryParams]="{
+            edit: application.id
+          }"
+          class="edit-button"
+        >
+          Edit Application
+        </a>
+
+        <a
+          routerLink="/applications"
+          class="back-button"
+        >
+          Back to Applications
+        </a>
+
+      </div>
+
+    </div>
+
+  } @else {
+
+    <div class="not-found">
+
+      <h1>
+        Application Not Found
+      </h1>
+
+      <p>
+        This application could not be found.
+      </p>
+
+      <a
+        routerLink="/applications"
+        class="back-button"
+      >
+        Back to Applications
+      </a>
+
+    </div>
+
+  }
+
+</div>

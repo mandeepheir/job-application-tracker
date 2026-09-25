@@ -1,4 +1,3 @@
-
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -20,15 +19,18 @@ export class AddApplication implements OnInit {
     location: '',
     jobUrl: '',
     applicationDate: '',
+    deadline: '',
+    priority: 'Medium',
     status: 'Applied',
     jobType: 'Full-time',
     notes: ''
   };
 
   companyError = '';
+
   jobTitleError = '';
 
-  editIndex: number | null = null;
+  editId: string | null = null;
 
   constructor(
     private router: Router,
@@ -38,34 +40,85 @@ export class AddApplication implements OnInit {
 
   ngOnInit() {
 
-    this.route.queryParams.subscribe(params => {
+    this.route.queryParamMap.subscribe(params => {
 
-      if (params['edit'] !== undefined) {
+      const id = params.get('edit');
 
-        this.editIndex = Number(params['edit']);
+      if (!id) {
+        return;
+      }
 
-        const savedApplications =
-          localStorage.getItem('applications');
+      this.editId = id;
 
-        if (savedApplications) {
+      this.firestoreService
+        .getApplications()
+        .subscribe({
 
-          const applications: Application[] =
-            JSON.parse(savedApplications);
+          next: (applications) => {
 
-          if (
-            this.editIndex >= 0 &&
-            this.editIndex < applications.length
-          ) {
+            const applicationToEdit =
+              applications.find(
+                application =>
+                  application.id === this.editId
+              );
+
+            if (!applicationToEdit) {
+
+              console.error(
+                'Application not found:',
+                this.editId
+              );
+
+              return;
+
+            }
 
             this.application = {
-              ...applications[this.editIndex]
+
+              company:
+                applicationToEdit.company,
+
+              jobTitle:
+                applicationToEdit.jobTitle,
+
+              location:
+                applicationToEdit.location,
+
+              jobUrl:
+                applicationToEdit.jobUrl,
+
+              applicationDate:
+                applicationToEdit.applicationDate,
+
+              deadline:
+                applicationToEdit.deadline || '',
+
+              priority:
+                applicationToEdit.priority || 'Medium',
+
+              status:
+                applicationToEdit.status,
+
+              jobType:
+                applicationToEdit.jobType,
+
+              notes:
+                applicationToEdit.notes
+
             };
+
+          },
+
+          error: (error) => {
+
+            console.error(
+              'Error loading application:',
+              error
+            );
 
           }
 
-        }
-
-      }
+        });
 
     });
 
@@ -74,40 +127,40 @@ export class AddApplication implements OnInit {
   async addApplication() {
 
     this.companyError = '';
+
     this.jobTitleError = '';
 
     if (!this.application.company.trim()) {
-      this.companyError = 'Company name is required.';
+
+      this.companyError =
+        'Company name is required.';
+
     }
 
     if (!this.application.jobTitle.trim()) {
-      this.jobTitleError = 'Job title is required.';
+
+      this.jobTitleError =
+        'Job title is required.';
+
     }
 
-    if (this.companyError || this.jobTitleError) {
+    if (
+      this.companyError ||
+      this.jobTitleError
+    ) {
+
       return;
+
     }
 
     try {
 
-      if (this.editIndex !== null) {
+      if (this.editId) {
 
-        const savedApplications =
-          JSON.parse(
-            localStorage.getItem('applications') || '[]'
-          );
-
-        const existingApplication =
-          savedApplications[this.editIndex];
-
-        if (existingApplication?.id) {
-
-          await this.firestoreService.updateApplication(
-            existingApplication.id,
-            this.application
-          );
-
-        }
+        await this.firestoreService.updateApplication(
+          this.editId,
+          this.application
+        );
 
       } else {
 
@@ -117,7 +170,9 @@ export class AddApplication implements OnInit {
 
       }
 
-      this.router.navigate(['/applications']);
+      await this.router.navigate([
+        '/applications'
+      ]);
 
     } catch (error) {
 
@@ -135,4 +190,3 @@ export class AddApplication implements OnInit {
   }
 
 }
-

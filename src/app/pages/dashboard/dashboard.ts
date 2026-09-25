@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
+
 import { Application } from '../../models/application';
+import { FirestoreService } from '../../services/firestore';
 
 @Component({
   selector: 'app-dashboard',
@@ -20,6 +22,15 @@ export class Dashboard implements OnInit {
 
   rejected = 0;
 
+  upcomingDeadlines = 0;
+
+  overdueApplications = 0;
+
+  highPriorityApplications = 0;
+
+  constructor(
+    private firestoreService: FirestoreService
+  ) {}
 
   ngOnInit() {
 
@@ -27,23 +38,32 @@ export class Dashboard implements OnInit {
 
   }
 
-
   loadApplications() {
 
-    const savedApplications =
-      localStorage.getItem('applications');
+    this.firestoreService
+      .getApplications()
+      .subscribe({
 
-    if (savedApplications) {
+        next: (applications) => {
 
-      this.applications =
-        JSON.parse(savedApplications);
+          this.applications = applications;
 
-    }
+          this.calculateStats();
 
-    this.calculateStats();
+        },
+
+        error: (error) => {
+
+          console.error(
+            'Error loading dashboard applications:',
+            error
+          );
+
+        }
+
+      });
 
   }
-
 
   calculateStats() {
 
@@ -71,6 +91,72 @@ export class Dashboard implements OnInit {
         application =>
           application.status === 'Rejected'
       ).length;
+
+
+    this.upcomingDeadlines =
+      this.applications.filter(
+        application =>
+          this.getDeadlineStatus(
+            application.deadline
+          ) === 'Upcoming'
+      ).length;
+
+
+    this.overdueApplications =
+      this.applications.filter(
+        application =>
+          this.getDeadlineStatus(
+            application.deadline
+          ) === 'Overdue'
+      ).length;
+
+
+    this.highPriorityApplications =
+      this.applications.filter(
+        application =>
+          application.priority === 'High'
+      ).length;
+
+  }
+
+
+  getDeadlineStatus(
+    deadline: string
+  ): string {
+
+    if (!deadline) {
+      return '';
+    }
+
+    const today = new Date();
+
+    today.setHours(
+      0,
+      0,
+      0,
+      0
+    );
+
+    const deadlineDate = new Date(
+      deadline + 'T00:00:00'
+    );
+
+    if (deadlineDate < today) {
+
+      return 'Overdue';
+
+    }
+
+    if (
+      deadlineDate.getTime() ===
+      today.getTime()
+    ) {
+
+      return 'Due Today';
+
+    }
+
+    return 'Upcoming';
 
   }
 

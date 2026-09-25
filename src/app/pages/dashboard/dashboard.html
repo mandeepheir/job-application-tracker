@@ -14,7 +14,6 @@
 
     </div>
 
-
     <a
       routerLink="/add-application"
       class="add-button"
@@ -123,6 +122,81 @@
   </div>
 
 
+  <!-- Deadline Statistics -->
+
+  <div class="stats-grid deadline-stats">
+
+    <!-- Upcoming Deadlines -->
+
+    <div class="stat-card">
+
+      <div class="stat-icon">
+        📅
+      </div>
+
+      <div>
+
+        <h2>
+          {{ upcomingDeadlines }}
+        </h2>
+
+        <p>
+          Upcoming Deadlines
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <!-- Overdue -->
+
+    <div class="stat-card">
+
+      <div class="stat-icon">
+        ⚠️
+      </div>
+
+      <div>
+
+        <h2>
+          {{ overdueApplications }}
+        </h2>
+
+        <p>
+          Overdue
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <!-- High Priority -->
+
+    <div class="stat-card">
+
+      <div class="stat-icon">
+        🔥
+      </div>
+
+      <div>
+
+        <h2>
+          {{ highPriorityApplications }}
+        </h2>
+
+        <p>
+          High Priority
+        </p>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
   <!-- Recent Applications -->
 
   <div class="dashboard-section">
@@ -140,7 +214,6 @@
         </p>
 
       </div>
-
 
       <a routerLink="/applications">
         View All

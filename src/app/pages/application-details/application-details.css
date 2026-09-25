@@ -1,0 +1,339 @@
+.details-page {
+
+  max-width: 1000px;
+
+  margin: 0 auto;
+
+}
+
+.details-header {
+
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: flex-start;
+
+  gap: 24px;
+
+  margin-bottom: 32px;
+
+}
+
+.back-link {
+
+  display: inline-block;
+
+  margin-bottom: 16px;
+
+  color: #6b7280;
+
+  text-decoration: none;
+
+  font-size: 14px;
+
+  font-weight: 600;
+
+}
+
+.back-link:hover {
+
+  color: #111827;
+
+}
+
+.details-header h1 {
+
+  margin: 0 0 8px;
+
+  font-size: 32px;
+
+}
+
+.company {
+
+  margin: 0;
+
+  color: #6b7280;
+
+  font-size: 18px;
+
+  font-weight: 500;
+
+}
+
+.status {
+
+  padding: 8px 14px;
+
+  background: #f3f4f6;
+
+  border-radius: 20px;
+
+  font-size: 14px;
+
+  font-weight: 600;
+
+  white-space: nowrap;
+
+}
+
+.details-grid {
+
+  display: grid;
+
+  gap: 20px;
+
+}
+
+.details-card {
+
+  padding: 24px;
+
+  background: #ffffff;
+
+  border: 1px solid #e5e7eb;
+
+  border-radius: 12px;
+
+}
+
+.details-card h2 {
+
+  margin: 0 0 20px;
+
+  font-size: 20px;
+
+}
+
+.detail-list {
+
+  display: grid;
+
+  grid-template-columns: repeat(2, 1fr);
+
+  gap: 20px;
+
+}
+
+.detail-item {
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 6px;
+
+}
+
+.detail-label {
+
+  color: #6b7280;
+
+  font-size: 13px;
+
+  font-weight: 600;
+
+}
+
+.detail-value {
+
+  color: #111827;
+
+  font-size: 15px;
+
+}
+
+.priority {
+
+  display: inline-block;
+
+  width: fit-content;
+
+  padding: 5px 10px;
+
+  border-radius: 6px;
+
+  font-size: 13px;
+
+  font-weight: 600;
+
+}
+
+.priority.high {
+
+  background: #fee2e2;
+
+  color: #b91c1c;
+
+}
+
+.priority.medium {
+
+  background: #fef3c7;
+
+  color: #92400e;
+
+}
+
+.priority.low {
+
+  background: #dcfce7;
+
+  color: #15803d;
+
+}
+
+.notes {
+
+  margin: 0;
+
+  color: #4b5563;
+
+  line-height: 1.7;
+
+  white-space: pre-wrap;
+
+}
+
+.empty-text {
+
+  margin: 0;
+
+  color: #9ca3af;
+
+}
+
+.job-link {
+
+  color: #111827;
+
+  font-weight: 600;
+
+  text-decoration: none;
+
+}
+
+.job-link:hover {
+
+  text-decoration: underline;
+
+}
+
+.details-actions {
+
+  display: flex;
+
+  gap: 12px;
+
+  margin-top: 4px;
+
+}
+
+.edit-button {
+
+  display: inline-block;
+
+  padding: 10px 18px;
+
+  background: #111827;
+
+  color: #ffffff;
+
+  border-radius: 8px;
+
+  text-decoration: none;
+
+  font-weight: 600;
+
+}
+
+.edit-button:hover {
+
+  opacity: 0.9;
+
+}
+
+.back-button {
+
+  display: inline-block;
+
+  padding: 10px 18px;
+
+  background: #ffffff;
+
+  color: #111827;
+
+  border: 1px solid #d1d5db;
+
+  border-radius: 8px;
+
+  text-decoration: none;
+
+  font-weight: 600;
+
+}
+
+.back-button:hover {
+
+  background: #f3f4f6;
+
+}
+
+.not-found {
+
+  text-align: center;
+
+  padding: 80px 20px;
+
+  background: #ffffff;
+
+  border: 1px solid #e5e7eb;
+
+  border-radius: 12px;
+
+}
+
+.not-found h1 {
+
+  margin-bottom: 8px;
+
+}
+
+.not-found p {
+
+  margin-bottom: 24px;
+
+  color: #6b7280;
+
+}
+
+@media (max-width: 700px) {
+
+  .details-header {
+
+    flex-direction: column;
+
+  }
+
+  .detail-list {
+
+    grid-template-columns: 1fr;
+
+  }
+
+  .details-actions {
+
+    flex-direction: column;
+
+  }
+
+  .edit-button,
+
+  .back-button {
+
+    text-align: center;
+
+  }
+
+}

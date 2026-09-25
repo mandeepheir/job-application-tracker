@@ -1,4 +1,3 @@
-
 <div class="applications-page">
 
   <div class="page-header">
@@ -27,8 +26,6 @@
 
   <div class="filters">
 
-    <!-- Search -->
-
     <div class="search-box">
 
       <label for="search">
@@ -45,8 +42,6 @@
 
     </div>
 
-
-    <!-- Status -->
 
     <div class="filter-box">
 
@@ -89,8 +84,6 @@
     </div>
 
 
-    <!-- Job Type -->
-
     <div class="filter-box">
 
       <label for="jobTypeFilter">
@@ -128,8 +121,6 @@
     </div>
 
 
-    <!-- Clear -->
-
     <button
       type="button"
       class="clear-button"
@@ -147,7 +138,9 @@
 
     <div class="empty-state">
 
-      <h2>No applications yet</h2>
+      <h2>
+        No applications yet
+      </h2>
 
       <p>
         Start tracking your job search by adding your first application.
@@ -165,7 +158,7 @@
   }
 
 
-  <!-- No search results -->
+  <!-- No matching applications -->
 
   @if (
     applications.length > 0 &&
@@ -174,7 +167,9 @@
 
     <div class="empty-state">
 
-      <h2>No matching applications</h2>
+      <h2>
+        No matching applications
+      </h2>
 
       <p>
         Try changing your search or filters.
@@ -206,6 +201,8 @@
 
         <div class="application-card">
 
+          <!-- Header -->
+
           <div class="application-header">
 
             <div>
@@ -227,6 +224,8 @@
           </div>
 
 
+          <!-- Details -->
+
           <div class="application-details">
 
             <p>
@@ -244,8 +243,32 @@
               {{ application.applicationDate }}
             </p>
 
+            @if (application.deadline) {
+
+              <p
+                [class]="getDeadlineClass(application.deadline)"
+              >
+
+                <strong>Deadline:</strong>
+                {{ application.deadline }}
+
+                <span class="deadline-status">
+                  {{ getDeadlineStatus(application.deadline) }}
+                </span>
+
+              </p>
+
+            }
+
+            <p>
+              <strong>Priority:</strong>
+              {{ application.priority }}
+            </p>
+
           </div>
 
+
+          <!-- Notes -->
 
           @if (application.notes) {
 
@@ -262,7 +285,20 @@
           }
 
 
+          <!-- Actions -->
+
           <div class="application-actions">
+
+            <a
+              [routerLink]="[
+                '/applications',
+                application.id
+              ]"
+              class="details-button"
+            >
+              View Details
+            </a>
+
 
             @if (application.jobUrl) {
 
@@ -308,4 +344,3 @@
   }
 
 </div>
-

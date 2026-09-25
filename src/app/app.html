@@ -8,21 +8,42 @@
 
     <div class="nav-links">
 
-      <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+      <a
+        routerLink="/"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
         Dashboard
       </a>
 
-      <a routerLink="/applications" routerLinkActive="active">
+      <a
+        routerLink="/applications"
+        routerLinkActive="active"
+      >
         Applications
       </a>
 
-      <a routerLink="/add-application" routerLinkActive="active">
+      <a
+        routerLink="/add-application"
+        routerLinkActive="active"
+      >
         Add Application
       </a>
 
-      <a routerLink="/settings" routerLinkActive="active">
+      <a
+        routerLink="/settings"
+        routerLinkActive="active"
+      >
         Settings
       </a>
+
+      <button
+        type="button"
+        class="logout-button"
+        (click)="logout()"
+      >
+        Logout
+      </button>
 
     </div>
 

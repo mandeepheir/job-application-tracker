@@ -1,136 +1,220 @@
-
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { RouterLink } from '@angular/router';
 
 import { Application } from '../../models/application';
 import { FirestoreService } from '../../services/firestore';
 
 @Component({
-  selector: 'app-add-application',
-  imports: [FormsModule],
-  templateUrl: './add-application.html',
-  styleUrl: './add-application.css'
+  selector: 'app-applications',
+  imports: [FormsModule, RouterLink],
+  templateUrl: './applications.html',
+  styleUrl: './applications.css'
 })
-export class AddApplication implements OnInit {
+export class Applications implements OnInit {
 
-  application: Application = {
-    company: '',
-    jobTitle: '',
-    location: '',
-    jobUrl: '',
-    applicationDate: '',
-    status: 'Applied',
-    jobType: 'Full-time',
-    notes: ''
-  };
+  applications: Application[] = [];
 
-  companyError = '';
-  jobTitleError = '';
+  filteredApplications: Application[] = [];
 
-  editId: string | null = null;
+  searchTerm = '';
+
+  selectedStatus = '';
+
+  selectedJobType = '';
 
   constructor(
-    private router: Router,
-    private route: ActivatedRoute,
     private firestoreService: FirestoreService
   ) {}
 
   ngOnInit() {
 
-    this.route.queryParams.subscribe(params => {
+    this.firestoreService
+      .getApplications()
+      .subscribe({
 
-      if (params['edit']) {
+        next: (applications) => {
 
-        this.editId = params['edit'];
+          this.applications = applications;
 
-        this.firestoreService
-          .getApplications()
-          .subscribe({
-            next: (applications) => {
+          this.filterApplications();
 
-              const applicationToEdit =
-                applications.find(
-                  application =>
-                    application.id === this.editId
-                );
+        },
 
-              if (applicationToEdit) {
+        error: (error) => {
 
-                this.application = {
-                  ...applicationToEdit
-                };
+          console.error(
+            'Error loading applications:',
+            error
+          );
 
-              }
+        }
 
-            },
-
-            error: (error) => {
-
-              console.error(
-                'Error loading application:',
-                error
-              );
-
-            }
-
-          });
-
-      }
-
-    });
+      });
 
   }
 
-  async addApplication() {
+  filterApplications() {
 
-    this.companyError = '';
-    this.jobTitleError = '';
+    this.filteredApplications =
+      this.applications.filter(
+        application => {
 
-    if (!this.application.company.trim()) {
-      this.companyError =
-        'Company name is required.';
+          const matchesSearch =
+            application.company
+              .toLowerCase()
+              .includes(
+                this.searchTerm.toLowerCase()
+              ) ||
+
+            application.jobTitle
+              .toLowerCase()
+              .includes(
+                this.searchTerm.toLowerCase()
+              );
+
+          const matchesStatus =
+            !this.selectedStatus ||
+            application.status === this.selectedStatus;
+
+          const matchesJobType =
+            !this.selectedJobType ||
+            application.jobType === this.selectedJobType;
+
+          return (
+            matchesSearch &&
+            matchesStatus &&
+            matchesJobType
+          );
+
+        }
+      );
+
+  }
+
+  clearFilters() {
+
+    this.searchTerm = '';
+
+    this.selectedStatus = '';
+
+    this.selectedJobType = '';
+
+    this.filterApplications();
+
+  }
+
+  getDeadlineStatus(
+    deadline: string
+  ): string {
+
+    if (!deadline) {
+      return '';
     }
 
-    if (!this.application.jobTitle.trim()) {
-      this.jobTitleError =
-        'Job title is required.';
+    const today = new Date();
+
+    today.setHours(
+      0,
+      0,
+      0,
+      0
+    );
+
+    const deadlineDate = new Date(
+      deadline + 'T00:00:00'
+    );
+
+    if (deadlineDate < today) {
+
+      return 'Overdue';
+
     }
 
-    if (this.companyError || this.jobTitleError) {
+    if (
+      deadlineDate.getTime() ===
+      today.getTime()
+    ) {
+
+      return 'Due Today';
+
+    }
+
+    return 'Upcoming';
+
+  }
+
+  getDeadlineClass(
+    deadline: string
+  ): string {
+
+    const status =
+      this.getDeadlineStatus(deadline);
+
+    if (status === 'Overdue') {
+
+      return 'deadline-overdue';
+
+    }
+
+    if (status === 'Due Today') {
+
+      return 'deadline-today';
+
+    }
+
+    if (status === 'Upcoming') {
+
+      return 'deadline-upcoming';
+
+    }
+
+    return '';
+
+  }
+
+  async deleteApplication(
+    index: number
+  ) {
+
+    const confirmed = confirm(
+      'Are you sure you want to delete this application?'
+    );
+
+    if (!confirmed) {
+
       return;
+
+    }
+
+    const applicationToDelete =
+      this.filteredApplications[index];
+
+    if (!applicationToDelete?.id) {
+
+      console.error(
+        'Application ID is missing.'
+      );
+
+      return;
+
     }
 
     try {
 
-      if (this.editId) {
-
-        await this.firestoreService.updateApplication(
-          this.editId,
-          this.application
-        );
-
-      } else {
-
-        await this.firestoreService.addApplication(
-          this.application
-        );
-
-      }
-
-      this.router.navigate([
-        '/applications'
-      ]);
+      await this.firestoreService.deleteApplication(
+        applicationToDelete.id
+      );
 
     } catch (error) {
 
       console.error(
-        'Error saving application:',
+        'Error deleting application:',
         error
       );
 
       alert(
-        'There was a problem saving the application.'
+        'There was a problem deleting the application.'
       );
 
     }
@@ -138,4 +222,3 @@ export class AddApplication implements OnInit {
   }
 
 }
-

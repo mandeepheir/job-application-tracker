@@ -50,3 +50,17 @@
   margin: 0 auto;
   padding: 32px;
 }
+
+.logout-button {
+  border: none;
+  background: transparent;
+  color: #6b7280;
+  font: inherit;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 0;
+}
+
+.logout-button:hover {
+  color: #111827;
+}
