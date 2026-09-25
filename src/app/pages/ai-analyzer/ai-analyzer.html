@@ -1,0 +1,356 @@
+
+<div class="ai-analyzer-page">
+
+
+  <!-- Page Header -->
+
+  <div class="page-header">
+
+    <div>
+
+      <h1>
+        AI Job Description Analyzer
+      </h1>
+
+      <p>
+        Analyze a job description and identify
+        important skills, keywords and requirements.
+      </p>
+
+    </div>
+
+  </div>
+
+
+  <!-- Job Description Input -->
+
+  <div class="analyzer-card">
+
+    <div class="card-header">
+
+      <div>
+
+        <h2>
+          Job Description
+        </h2>
+
+        <p>
+          Paste the job description below.
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <textarea
+      [(ngModel)]="jobDescription"
+      placeholder="Paste the complete job description here..."
+      rows="14"
+    ></textarea>
+
+
+    <div class="input-actions">
+
+      <span class="character-count">
+
+        {{ jobDescription.length }}
+        characters
+
+      </span>
+
+
+      <div class="button-group">
+
+        <button
+          type="button"
+          class="clear-button"
+          (click)="clearAnalyzer()"
+        >
+          Clear
+        </button>
+
+
+        <button
+          type="button"
+          class="analyze-button"
+          (click)="analyzeJob()"
+          [disabled]="
+            analyzing ||
+            !jobDescription.trim()
+          "
+        >
+
+          @if (analyzing) {
+
+            Analyzing...
+
+          } @else {
+
+            Analyze Job
+
+          }
+
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- Analysis Results -->
+
+  @if (analysisResult) {
+
+    <div class="results-section">
+
+
+      <!-- Match Score -->
+
+      <div class="match-score-card">
+
+        <h3>
+          Job Match Score
+        </h3>
+
+
+        <div class="match-score">
+
+          <span class="score-number">
+
+            {{ analysisResult.matchScore }}%
+
+          </span>
+
+
+          <span class="score-label">
+
+            Skill Match
+
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <!-- Results Header -->
+
+      <div class="results-header">
+
+        <div>
+
+          <h2>
+            Analysis Results
+          </h2>
+
+          <p>
+            Important information detected from
+            the job description.
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <!-- Experience -->
+
+      <div class="result-card">
+
+        <h3>
+          Experience Required
+        </h3>
+
+
+        <div class="experience-value">
+
+          {{ analysisResult.experience }}
+
+        </div>
+
+      </div>
+
+
+      <!-- Required Skills -->
+
+      <div class="result-card">
+
+        <h3>
+          Required Skills
+        </h3>
+
+
+        <div class="tag-list">
+
+          @for (
+            skill of analysisResult.skills;
+            track skill
+          ) {
+
+            <span class="skill-tag">
+
+              {{ skill }}
+
+            </span>
+
+          }
+
+        </div>
+
+      </div>
+
+
+      <!-- Matched Skills -->
+
+      <div class="result-card">
+
+        <h3>
+          Skills You Have
+        </h3>
+
+
+        @if (
+          analysisResult.matchedSkills.length > 0
+        ) {
+
+          <div class="tag-list">
+
+            @for (
+              skill of analysisResult.matchedSkills;
+              track skill
+            ) {
+
+              <span class="matched-tag">
+
+                ✓ {{ skill }}
+
+              </span>
+
+            }
+
+          </div>
+
+        } @else {
+
+          <p class="empty-result">
+
+            No matching skills detected.
+
+          </p>
+
+        }
+
+      </div>
+
+
+      <!-- Missing Skills -->
+
+      <div class="result-card">
+
+        <h3>
+          Skills To Learn
+        </h3>
+
+
+        @if (
+          analysisResult.missingSkills.length > 0
+        ) {
+
+          <div class="tag-list">
+
+            @for (
+              skill of analysisResult.missingSkills;
+              track skill
+            ) {
+
+              <span class="missing-tag">
+
+                + {{ skill }}
+
+              </span>
+
+            }
+
+          </div>
+
+        } @else {
+
+          <p class="empty-result">
+
+            No missing skills detected.
+
+          </p>
+
+        }
+
+      </div>
+
+
+      <!-- Keywords -->
+
+      <div class="result-card">
+
+        <h3>
+          Important Keywords
+        </h3>
+
+
+        <div class="tag-list">
+
+          @for (
+            keyword of analysisResult.keywords;
+            track keyword
+          ) {
+
+            <span class="keyword-tag">
+
+              {{ keyword }}
+
+            </span>
+
+          }
+
+        </div>
+
+      </div>
+
+
+      <!-- Responsibilities -->
+
+      <div class="result-card">
+
+        <h3>
+          Responsibilities
+        </h3>
+
+
+        <ul class="responsibility-list">
+
+          @for (
+            responsibility of
+            analysisResult.responsibilities;
+            track responsibility
+          ) {
+
+            <li>
+
+              {{ responsibility }}
+
+            </li>
+
+          }
+
+        </ul>
+
+      </div>
+
+
+    </div>
+
+  }
+
+</div>
+

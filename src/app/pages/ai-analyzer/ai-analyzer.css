@@ -1,0 +1,486 @@
+
+.ai-analyzer-page {
+
+  max-width: 1000px;
+
+  margin: 0 auto;
+
+}
+
+
+/* Page Header */
+
+.page-header {
+
+  margin-bottom: 32px;
+
+}
+
+.page-header h1 {
+
+  margin: 0 0 8px;
+
+  font-size: 32px;
+
+}
+
+.page-header p {
+
+  margin: 0;
+
+  color: #6b7280;
+
+  line-height: 1.6;
+
+}
+
+
+/* Analyzer Card */
+
+.analyzer-card {
+
+  padding: 24px;
+
+  background: #ffffff;
+
+  border: 1px solid #e5e7eb;
+
+  border-radius: 12px;
+
+}
+
+.card-header h2 {
+
+  margin: 0 0 6px;
+
+  font-size: 20px;
+
+}
+
+.card-header p {
+
+  margin: 0 0 20px;
+
+  color: #6b7280;
+
+}
+
+
+/* Textarea */
+
+textarea {
+
+  width: 100%;
+
+  min-height: 280px;
+
+  padding: 14px;
+
+  border: 1px solid #d1d5db;
+
+  border-radius: 8px;
+
+  font-family: inherit;
+
+  font-size: 15px;
+
+  line-height: 1.6;
+
+  resize: vertical;
+
+  box-sizing: border-box;
+
+}
+
+textarea:focus {
+
+  outline: none;
+
+  border-color: #111827;
+
+  box-shadow:
+    0 0 0 2px rgba(
+      17,
+      24,
+      39,
+      0.08
+    );
+
+}
+
+
+/* Input Actions */
+
+.input-actions {
+
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  gap: 16px;
+
+  margin-top: 16px;
+
+}
+
+.character-count {
+
+  color: #6b7280;
+
+  font-size: 13px;
+
+}
+
+.button-group {
+
+  display: flex;
+
+  gap: 10px;
+
+}
+
+
+/* Buttons */
+
+.clear-button {
+
+  padding: 10px 18px;
+
+  border: 1px solid #d1d5db;
+
+  border-radius: 8px;
+
+  background: #ffffff;
+
+  color: #111827;
+
+  font-size: 14px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+}
+
+.clear-button:hover {
+
+  background: #f3f4f6;
+
+}
+
+
+.analyze-button {
+
+  padding: 10px 18px;
+
+  border: none;
+
+  border-radius: 8px;
+
+  background: #111827;
+
+  color: #ffffff;
+
+  font-size: 14px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+}
+
+.analyze-button:hover:not(:disabled) {
+
+  opacity: 0.9;
+
+}
+
+.analyze-button:disabled {
+
+  opacity: 0.5;
+
+  cursor: not-allowed;
+
+}
+
+
+/* Results */
+
+.results-section {
+
+  margin-top: 32px;
+
+}
+
+.results-header {
+
+  margin-bottom: 20px;
+
+}
+
+.results-header h2 {
+
+  margin: 0 0 6px;
+
+  font-size: 24px;
+
+}
+
+.results-header p {
+
+  margin: 0;
+
+  color: #6b7280;
+
+}
+
+
+/* Match Score */
+
+.match-score-card {
+
+  margin-bottom: 16px;
+
+  padding: 24px;
+
+  background: #ffffff;
+
+  border: 1px solid #e5e7eb;
+
+  border-radius: 12px;
+
+}
+
+.match-score-card h3 {
+
+  margin: 0 0 16px;
+
+  font-size: 18px;
+
+}
+
+.match-score {
+
+  display: flex;
+
+  align-items: baseline;
+
+  gap: 10px;
+
+}
+
+.score-number {
+
+  font-size: 42px;
+
+  font-weight: 700;
+
+  color: #111827;
+
+}
+
+.score-label {
+
+  color: #6b7280;
+
+  font-size: 14px;
+
+}
+
+
+/* Result Cards */
+
+.result-card {
+
+  margin-bottom: 16px;
+
+  padding: 24px;
+
+  background: #ffffff;
+
+  border: 1px solid #e5e7eb;
+
+  border-radius: 12px;
+
+}
+
+.result-card h3 {
+
+  margin: 0 0 16px;
+
+  font-size: 18px;
+
+}
+
+
+/* Experience */
+
+.experience-value {
+
+  display: inline-block;
+
+  padding: 8px 14px;
+
+  background: #f3f4f6;
+
+  border-radius: 8px;
+
+  font-weight: 600;
+
+}
+
+
+/* Tags */
+
+.tag-list {
+
+  display: flex;
+
+  flex-wrap: wrap;
+
+  gap: 8px;
+
+}
+
+
+.skill-tag,
+
+.keyword-tag,
+
+.matched-tag,
+
+.missing-tag {
+
+  display: inline-block;
+
+  padding: 7px 11px;
+
+  border-radius: 20px;
+
+  font-size: 13px;
+
+  font-weight: 600;
+
+}
+
+
+/* Required Skills */
+
+.skill-tag {
+
+  background: #e0e7ff;
+
+  color: #3730a3;
+
+}
+
+
+/* Important Keywords */
+
+.keyword-tag {
+
+  background: #f3f4f6;
+
+  color: #374151;
+
+}
+
+
+/* Matching Skills */
+
+.matched-tag {
+
+  background: #dcfce7;
+
+  color: #166534;
+
+}
+
+
+/* Missing Skills */
+
+.missing-tag {
+
+  background: #fee2e2;
+
+  color: #991b1b;
+
+}
+
+
+/* Empty Results */
+
+.empty-result {
+
+  margin: 0;
+
+  color: #6b7280;
+
+  line-height: 1.6;
+
+}
+
+
+/* Responsibilities */
+
+.responsibility-list {
+
+  margin: 0;
+
+  padding-left: 20px;
+
+}
+
+.responsibility-list li {
+
+  margin-bottom: 10px;
+
+  color: #4b5563;
+
+  line-height: 1.6;
+
+}
+
+.responsibility-list li:last-child {
+
+  margin-bottom: 0;
+
+}
+
+
+/* Responsive */
+
+@media (max-width: 600px) {
+
+  .input-actions {
+
+    flex-direction: column;
+
+    align-items: stretch;
+
+  }
+
+  .button-group {
+
+    width: 100%;
+
+  }
+
+  .clear-button,
+
+  .analyze-button {
+
+    flex: 1;
+
+  }
+
+  .score-number {
+
+    font-size: 36px;
+
+  }
+
+}
+
