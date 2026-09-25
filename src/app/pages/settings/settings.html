@@ -1,1 +1,428 @@
-<p>settings works!</p>
+
+<div class="settings-page">
+
+  <!-- Page Header -->
+
+  <div class="page-header">
+
+    <div>
+
+      <h1>
+        Settings
+      </h1>
+
+      <p>
+        Manage your profile, job search preferences
+        and application settings.
+      </p>
+
+    </div>
+
+  </div>
+
+
+  <!-- Profile -->
+
+  <section class="settings-card">
+
+    <div class="section-header">
+
+      <div>
+
+        <h2>
+          Profile
+        </h2>
+
+        <p>
+          Keep your basic career information up to date.
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <div class="form-grid">
+
+      <div class="form-group">
+
+        <label for="name">
+          Name
+        </label>
+
+        <input
+          id="name"
+          type="text"
+          [(ngModel)]="settings.name"
+          placeholder="Enter your name"
+        />
+
+      </div>
+
+
+      <div class="form-group">
+
+        <label for="email">
+          Email
+        </label>
+
+        <input
+          id="email"
+          type="email"
+          [(ngModel)]="settings.email"
+          placeholder="Enter your email"
+        />
+
+      </div>
+
+
+      <div class="form-group full-width">
+
+        <label for="targetRole">
+          Target Role
+        </label>
+
+        <input
+          id="targetRole"
+          type="text"
+          [(ngModel)]="settings.targetRole"
+          placeholder="e.g. Software Developer"
+        />
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- Job Search Preferences -->
+
+  <section class="settings-card">
+
+    <div class="section-header">
+
+      <div>
+
+        <h2>
+          Job Search Preferences
+        </h2>
+
+        <p>
+          Set the types of jobs you are looking for.
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <div class="form-grid">
+
+      <div class="form-group">
+
+        <label for="location">
+          Preferred Location
+        </label>
+
+        <input
+          id="location"
+          type="text"
+          [(ngModel)]="settings.preferredLocation"
+          placeholder="e.g. Toronto, Canada"
+        />
+
+      </div>
+
+
+      <div class="form-group">
+
+        <label for="jobType">
+          Preferred Job Type
+        </label>
+
+        <select
+          id="jobType"
+          [(ngModel)]="settings.preferredJobType"
+        >
+
+          <option value="Full-time">
+            Full-time
+          </option>
+
+          <option value="Part-time">
+            Part-time
+          </option>
+
+          <option value="Contract">
+            Contract
+          </option>
+
+          <option value="Internship">
+            Internship
+          </option>
+
+          <option value="Co-op">
+            Co-op
+          </option>
+
+        </select>
+
+      </div>
+
+
+      <div class="form-group full-width">
+
+        <label for="workPreference">
+          Work Preference
+        </label>
+
+        <select
+          id="workPreference"
+          [(ngModel)]="settings.workPreference"
+        >
+
+          <option value="Remote">
+            Remote
+          </option>
+
+          <option value="Hybrid">
+            Hybrid
+          </option>
+
+          <option value="On-site">
+            On-site
+          </option>
+
+          <option value="Any">
+            Any
+          </option>
+
+        </select>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- Application Preferences -->
+
+  <section class="settings-card">
+
+    <div class="section-header">
+
+      <div>
+
+        <h2>
+          Application Preferences
+        </h2>
+
+        <p>
+          Choose your default values for new applications.
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <div class="form-grid">
+
+      <div class="form-group">
+
+        <label for="defaultStatus">
+          Default Status
+        </label>
+
+        <select
+          id="defaultStatus"
+          [(ngModel)]="settings.defaultStatus"
+        >
+
+          <option value="Applied">
+            Applied
+          </option>
+
+          <option value="Interview">
+            Interview
+          </option>
+
+          <option value="Technical">
+            Technical
+          </option>
+
+          <option value="Offer">
+            Offer
+          </option>
+
+          <option value="Rejected">
+            Rejected
+          </option>
+
+        </select>
+
+      </div>
+
+
+      <div class="form-group">
+
+        <label for="defaultPriority">
+          Default Priority
+        </label>
+
+        <select
+          id="defaultPriority"
+          [(ngModel)]="settings.defaultPriority"
+        >
+
+          <option value="Low">
+            Low
+          </option>
+
+          <option value="Medium">
+            Medium
+          </option>
+
+          <option value="High">
+            High
+          </option>
+
+        </select>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- Appearance -->
+
+  <section class="settings-card">
+
+    <div class="section-header">
+
+      <div>
+
+        <h2>
+          Appearance
+        </h2>
+
+        <p>
+          Customize how JobTrack displays information.
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <label class="toggle-row">
+
+      <div>
+
+        <strong>
+          Compact Mode
+        </strong>
+
+        <p>
+          Reduce spacing to display more information
+          on the screen.
+        </p>
+
+      </div>
+
+
+      <input
+        type="checkbox"
+        [(ngModel)]="settings.compactMode"
+      />
+
+      <span class="toggle-slider"></span>
+
+    </label>
+
+  </section>
+
+
+  <!-- Data Management -->
+
+  <section class="settings-card">
+
+    <div class="section-header">
+
+      <div>
+
+        <h2>
+          Data Management
+        </h2>
+
+        <p>
+          Manage locally stored application information.
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <div class="data-actions">
+
+      <button
+        type="button"
+        class="secondary-button"
+        (click)="exportApplications()"
+      >
+        Export Applications
+      </button>
+
+
+      <button
+        type="button"
+        class="danger-button"
+        (click)="clearLocalData()"
+      >
+        Clear Local Data
+      </button>
+
+    </div>
+
+  </section>
+
+
+  <!-- Actions -->
+
+  <section class="settings-actions">
+
+    @if (saved) {
+
+      <span class="saved-message">
+        ✓ Settings saved
+      </span>
+
+    }
+
+
+    <button
+      type="button"
+      class="reset-button"
+      (click)="resetSettings()"
+    >
+      Reset
+    </button>
+
+
+    <button
+      type="button"
+      class="save-button"
+      (click)="saveSettings()"
+    >
+      Save Settings
+    </button>
+
+  </section>
+
+</div>
+
