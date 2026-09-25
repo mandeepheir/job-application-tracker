@@ -18,6 +18,8 @@ interface AnalysisResult {
 
   missingSkills: string[];
 
+  recommendedLearning: string[];
+
   matchScore: number;
 
 }
@@ -44,150 +46,225 @@ export class AiAnalyzer {
   mySkills = [
 
     'javascript',
-
     'typescript',
-
     'angular',
-
     'html',
-
     'css',
-
     'python',
-
     'java',
-
     'sql',
-
     'firebase',
-
     'node.js',
-
     'node',
-
     'git',
-
     'github',
-
     'rest api',
-
     'api',
-
     'data structures',
-
     'algorithms'
 
   ];
 
 
   /*
-   * Technical and professional terms
-   * that can be useful as resume keywords.
+   * Resume keywords that can be detected.
    */
 
   possibleResumeKeywords = [
 
     'javascript',
-
     'typescript',
-
     'angular',
-
     'react',
-
     'vue',
-
     'html',
-
     'css',
-
     'python',
-
     'java',
-
     'c++',
-
     'c#',
-
     'sql',
-
     'mongodb',
-
     'firebase',
-
     'node.js',
-
     'node',
-
     'express',
-
     'git',
-
     'github',
-
     'docker',
-
     'kubernetes',
-
     'aws',
-
     'azure',
-
     'gcp',
-
     'machine learning',
-
     'artificial intelligence',
-
     'ai',
-
     'data structures',
-
     'algorithms',
-
     'rest api',
-
     'api',
-
     'spring boot',
-
     'full stack',
-
     'frontend',
-
     'backend',
-
     'web development',
-
     'software development',
-
     'problem solving',
-
     'teamwork',
-
     'communication',
-
     'agile',
-
     'scrum',
-
     'testing',
-
     'debugging',
-
     'cloud',
-
     'database',
-
     'deployment',
-
     'performance',
-
     'scalable',
-
     'responsive design'
 
   ];
+
+
+  /*
+   * Learning recommendations
+   * for common technologies.
+   */
+
+  learningRecommendations: {
+    [key: string]: string;
+  } = {
+
+    'javascript':
+      'Practice modern JavaScript, ES6+, asynchronous programming and DOM manipulation.',
+
+    'typescript':
+      'Learn TypeScript interfaces, types, generics, classes and advanced type patterns.',
+
+    'angular':
+      'Practice Angular components, routing, services, forms, RxJS and state management.',
+
+    'react':
+      'Learn React components, hooks, props, state management and API integration.',
+
+    'vue':
+      'Learn Vue components, reactive state, routing and API integration.',
+
+    'html':
+      'Practice semantic HTML, accessibility and modern form structures.',
+
+    'css':
+      'Practice responsive layouts, Flexbox, Grid, animations and modern CSS.',
+
+    'python':
+      'Practice Python fundamentals, object-oriented programming and API development.',
+
+    'java':
+      'Practice Java OOP, collections, exception handling and backend development.',
+
+    'c++':
+      'Practice C++ fundamentals, STL, memory management and data structures.',
+
+    'c#':
+      'Learn C# fundamentals, .NET and object-oriented application development.',
+
+    'sql':
+      'Practice SQL queries, joins, indexes, normalization and database design.',
+
+    'mongodb':
+      'Learn MongoDB documents, collections, queries, indexes and aggregation.',
+
+    'firebase':
+      'Practice Firebase Authentication, Firestore, security rules and deployment.',
+
+    'node.js':
+      'Learn Node.js backend development, APIs, middleware and asynchronous programming.',
+
+    'node':
+      'Learn Node.js backend development, APIs, middleware and asynchronous programming.',
+
+    'express':
+      'Build REST APIs with Express, middleware, routing and authentication.',
+
+    'git':
+      'Practice Git branching, merging, rebasing and collaborative workflows.',
+
+    'github':
+      'Learn GitHub pull requests, issues, branching strategies and project workflows.',
+
+    'docker':
+      'Learn Docker images, containers, Dockerfiles and containerized application deployment.',
+
+    'kubernetes':
+      'Learn Kubernetes pods, deployments, services, configurations and scaling.',
+
+    'aws':
+      'Learn AWS fundamentals including EC2, S3, IAM, Lambda and cloud deployment.',
+
+    'azure':
+      'Learn Azure fundamentals, cloud services, identity and application deployment.',
+
+    'gcp':
+      'Learn Google Cloud fundamentals, compute, storage and application deployment.',
+
+    'machine learning':
+      'Learn supervised learning, model evaluation, feature engineering and Python ML libraries.',
+
+    'artificial intelligence':
+      'Study AI fundamentals, machine learning concepts and practical AI applications.',
+
+    'ai':
+      'Learn AI fundamentals, LLM concepts, prompt engineering and AI API integration.',
+
+    'data structures':
+      'Practice arrays, linked lists, stacks, queues, trees, graphs and hash tables.',
+
+    'algorithms':
+      'Practice sorting, searching, recursion, dynamic programming and graph algorithms.',
+
+    'rest api':
+      'Build REST APIs using HTTP methods, JSON, authentication and error handling.',
+
+    'api':
+      'Practice API integration, HTTP requests, authentication and error handling.',
+
+    'spring boot':
+      'Learn Spring Boot, REST APIs, dependency injection and Java backend development.',
+
+    'full stack':
+      'Build complete applications connecting a frontend, backend and database.',
+
+    'frontend':
+      'Practice responsive UI development, accessibility and frontend architecture.',
+
+    'backend':
+      'Learn server-side development, APIs, databases, authentication and deployment.',
+
+    'web development':
+      'Build responsive full-stack web applications using modern development tools.',
+
+    'testing':
+      'Learn unit testing, integration testing and test-driven development basics.',
+
+    'debugging':
+      'Practice browser debugging, logging, breakpoints and systematic troubleshooting.',
+
+    'cloud':
+      'Learn cloud computing fundamentals, deployment, networking and cloud security.',
+
+    'database':
+      'Study relational and NoSQL databases, indexing, queries and database design.',
+
+    'deployment':
+      'Learn CI/CD, hosting, environment variables and production deployment.',
+
+    'performance':
+      'Learn web performance optimization, caching, lazy loading and profiling.',
+
+    'responsive design':
+      'Practice responsive layouts using CSS Grid, Flexbox and mobile-first design.'
+
+  };
 
 
   analyzeJob() {
@@ -197,7 +274,6 @@ export class AiAnalyzer {
       return;
 
     }
-
 
     this.analyzing = true;
 
@@ -215,65 +291,36 @@ export class AiAnalyzer {
       const possibleSkills = [
 
         'javascript',
-
         'typescript',
-
         'angular',
-
         'react',
-
         'vue',
-
         'html',
-
         'css',
-
         'python',
-
         'java',
-
         'c++',
-
         'c#',
-
         'sql',
-
         'mongodb',
-
         'firebase',
-
         'node.js',
-
         'node',
-
         'express',
-
         'git',
-
         'github',
-
         'docker',
-
+        'kubernetes',
         'aws',
-
         'azure',
-
         'gcp',
-
         'machine learning',
-
         'artificial intelligence',
-
         'ai',
-
         'data structures',
-
         'algorithms',
-
         'rest api',
-
         'api',
-
         'spring boot'
 
       ];
@@ -287,45 +334,28 @@ export class AiAnalyzer {
 
 
       /*
-       * Detect important job keywords.
+       * Detect important keywords.
        */
 
       const possibleKeywords = [
 
         'software development',
-
         'full stack',
-
         'frontend',
-
         'backend',
-
         'web development',
-
         'problem solving',
-
         'teamwork',
-
         'communication',
-
         'agile',
-
         'scrum',
-
         'testing',
-
         'debugging',
-
         'cloud',
-
         'database',
-
         'deployment',
-
         'performance',
-
         'scalable',
-
         'responsive design'
 
       ];
@@ -339,9 +369,7 @@ export class AiAnalyzer {
 
 
       /*
-       * Resume keywords combine
-       * technical skills and important
-       * professional keywords.
+       * Detect resume keywords.
        */
 
       const resumeKeywords =
@@ -352,7 +380,7 @@ export class AiAnalyzer {
 
 
       /*
-       * Detect experience requirement.
+       * Detect experience.
        */
 
       const experienceMatch =
@@ -378,7 +406,7 @@ export class AiAnalyzer {
 
 
       /*
-       * Find skills you already have.
+       * Find matching skills.
        */
 
       const matchedSkills =
@@ -389,8 +417,7 @@ export class AiAnalyzer {
 
 
       /*
-       * Find skills you don't currently
-       * have in your skill list.
+       * Find missing skills.
        */
 
       const missingSkills =
@@ -398,6 +425,24 @@ export class AiAnalyzer {
           skill =>
             !this.mySkills.includes(skill)
         );
+
+
+      /*
+       * Create learning recommendations.
+       */
+
+      const recommendedLearning =
+        missingSkills
+
+          .map(
+            skill =>
+              this.learningRecommendations[skill]
+          )
+
+          .filter(
+            recommendation =>
+              !!recommendation
+          );
 
 
       /*
@@ -421,7 +466,7 @@ export class AiAnalyzer {
 
 
       /*
-       * Store complete analysis.
+       * Store results.
        */
 
       this.analysisResult = {
@@ -431,33 +476,28 @@ export class AiAnalyzer {
             ? foundSkills
             : ['No specific skills detected'],
 
-
         keywords:
           foundKeywords.length > 0
             ? foundKeywords
             : ['No specific keywords detected'],
-
 
         resumeKeywords:
           resumeKeywords.length > 0
             ? resumeKeywords
             : ['No relevant resume keywords detected'],
 
-
         experience,
-
 
         responsibilities:
           responsibilities.length > 0
             ? responsibilities
             : ['No responsibilities detected'],
 
-
         matchedSkills,
-
 
         missingSkills,
 
+        recommendedLearning,
 
         matchScore
 

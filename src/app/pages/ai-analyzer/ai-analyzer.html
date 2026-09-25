@@ -1,9 +1,6 @@
 
 <div class="ai-analyzer-page">
 
-
-  <!-- Page Header -->
-
   <div class="page-header">
 
     <div>
@@ -21,8 +18,6 @@
 
   </div>
 
-
-  <!-- Job Description Input -->
 
   <div class="analyzer-card">
 
@@ -53,10 +48,7 @@
     <div class="input-actions">
 
       <span class="character-count">
-
-        {{ jobDescription.length }}
-        characters
-
+        {{ jobDescription.length }} characters
       </span>
 
 
@@ -100,8 +92,6 @@
   </div>
 
 
-  <!-- Analysis Results -->
-
   @if (analysisResult) {
 
     <div class="results-section">
@@ -119,24 +109,17 @@
         <div class="match-score">
 
           <span class="score-number">
-
             {{ analysisResult.matchScore }}%
-
           </span>
 
-
           <span class="score-label">
-
             Skill Match
-
           </span>
 
         </div>
 
       </div>
 
-
-      <!-- Results Header -->
 
       <div class="results-header">
 
@@ -164,11 +147,8 @@
           Experience Required
         </h3>
 
-
         <div class="experience-value">
-
           {{ analysisResult.experience }}
-
         </div>
 
       </div>
@@ -182,7 +162,6 @@
           Required Skills
         </h3>
 
-
         <div class="tag-list">
 
           @for (
@@ -191,9 +170,7 @@
           ) {
 
             <span class="skill-tag">
-
               {{ skill }}
-
             </span>
 
           }
@@ -203,14 +180,13 @@
       </div>
 
 
-      <!-- Matched Skills -->
+      <!-- Skills You Have -->
 
       <div class="result-card">
 
         <h3>
           Skills You Have
         </h3>
-
 
         @if (
           analysisResult.matchedSkills.length > 0
@@ -224,9 +200,7 @@
             ) {
 
               <span class="matched-tag">
-
                 ✓ {{ skill }}
-
               </span>
 
             }
@@ -236,9 +210,7 @@
         } @else {
 
           <p class="empty-result">
-
             No matching skills detected.
-
           </p>
 
         }
@@ -246,14 +218,13 @@
       </div>
 
 
-      <!-- Missing Skills -->
+      <!-- Skills To Learn -->
 
       <div class="result-card">
 
         <h3>
           Skills To Learn
         </h3>
-
 
         @if (
           analysisResult.missingSkills.length > 0
@@ -267,9 +238,7 @@
             ) {
 
               <span class="missing-tag">
-
                 + {{ skill }}
-
               </span>
 
             }
@@ -279,9 +248,7 @@
         } @else {
 
           <p class="empty-result">
-
             No missing skills detected.
-
           </p>
 
         }
@@ -289,14 +256,84 @@
       </div>
 
 
-      <!-- Keywords -->
+      <!-- Recommended Learning -->
+
+      <div class="result-card">
+
+        <h3>
+          Recommended Learning
+        </h3>
+
+        @if (
+          analysisResult.recommendedLearning.length > 0
+        ) {
+
+          <ul class="learning-list">
+
+            @for (
+              recommendation of
+              analysisResult.recommendedLearning;
+              track recommendation
+            ) {
+
+              <li>
+                {{ recommendation }}
+              </li>
+
+            }
+
+          </ul>
+
+        } @else {
+
+          <p class="empty-result">
+            No additional learning recommendations
+            were detected.
+          </p>
+
+        }
+
+      </div>
+
+
+      <!-- Resume Keywords -->
+
+      <div class="result-card">
+
+        <h3>
+          Resume Keywords
+        </h3>
+
+        <p class="result-description">
+          Consider using these terms in your resume
+          when they accurately describe your experience.
+        </p>
+
+        <div class="tag-list">
+
+          @for (
+            keyword of analysisResult.resumeKeywords;
+            track keyword
+          ) {
+
+            <span class="resume-keyword-tag">
+              {{ keyword }}
+            </span>
+
+          }
+
+        </div>
+
+      </div>
+
+
+      <!-- Important Keywords -->
 
       <div class="result-card">
 
         <h3>
           Important Keywords
         </h3>
-
 
         <div class="tag-list">
 
@@ -306,9 +343,7 @@
           ) {
 
             <span class="keyword-tag">
-
               {{ keyword }}
-
             </span>
 
           }
@@ -326,7 +361,6 @@
           Responsibilities
         </h3>
 
-
         <ul class="responsibility-list">
 
           @for (
@@ -336,9 +370,7 @@
           ) {
 
             <li>
-
               {{ responsibility }}
-
             </li>
 
           }
