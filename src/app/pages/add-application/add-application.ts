@@ -1,3 +1,4 @@
+
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -13,18 +14,34 @@ import { FirestoreService } from '../../services/firestore';
 })
 export class AddApplication implements OnInit {
 
+  private readonly settingsKey =
+    'jobtrack-settings';
+
+
   application: Application = {
+
     company: '',
+
     jobTitle: '',
+
     location: '',
+
     jobUrl: '',
+
     applicationDate: '',
+
     deadline: '',
+
     priority: 'Medium',
+
     status: 'Applied',
+
     jobType: 'Full-time',
+
     notes: ''
+
   };
+
 
   companyError = '';
 
@@ -32,97 +49,205 @@ export class AddApplication implements OnInit {
 
   editId: string | null = null;
 
+
   constructor(
+
     private router: Router,
+
     private route: ActivatedRoute,
+
     private firestoreService: FirestoreService
+
   ) {}
+
 
   ngOnInit() {
 
-    this.route.queryParamMap.subscribe(params => {
+    this.route.queryParamMap.subscribe(
+      params => {
 
-      const id = params.get('edit');
+        const id =
+          params.get('edit');
 
-      if (!id) {
-        return;
+
+        /*
+         * If editing an existing
+         * application, load that
+         * application.
+         */
+
+        if (id) {
+
+          this.editId = id;
+
+          this.loadApplicationForEdit();
+
+          return;
+
+        }
+
+
+        /*
+         * Otherwise apply the
+         * user's saved defaults.
+         */
+
+        this.loadSavedDefaults();
+
+      }
+    );
+
+  }
+
+
+  /*
+   * Load user's saved settings.
+   */
+
+  private loadSavedDefaults() {
+
+    const savedSettings =
+      localStorage.getItem(
+        this.settingsKey
+      );
+
+
+    if (!savedSettings) {
+
+      return;
+
+    }
+
+
+    try {
+
+      const settings =
+        JSON.parse(
+          savedSettings
+        );
+
+
+      if (
+        settings.defaultStatus
+      ) {
+
+        this.application.status =
+          settings.defaultStatus;
+
       }
 
-      this.editId = id;
 
-      this.firestoreService
-        .getApplications()
-        .subscribe({
+      if (
+        settings.defaultPriority
+      ) {
 
-          next: (applications) => {
+        this.application.priority =
+          settings.defaultPriority;
 
-            const applicationToEdit =
-              applications.find(
-                application =>
-                  application.id === this.editId
-              );
+      }
 
-            if (!applicationToEdit) {
 
-              console.error(
-                'Application not found:',
+    } catch (error) {
+
+      console.error(
+        'Error loading saved settings:',
+        error
+      );
+
+    }
+
+  }
+
+
+  /*
+   * Load an existing application
+   * when editing.
+   */
+
+  private loadApplicationForEdit() {
+
+    this.firestoreService
+      .getApplications()
+      .subscribe({
+
+        next: (applications) => {
+
+          const applicationToEdit =
+            applications.find(
+              application =>
+                application.id ===
                 this.editId
-              );
+            );
 
-              return;
 
-            }
-
-            this.application = {
-
-              company:
-                applicationToEdit.company,
-
-              jobTitle:
-                applicationToEdit.jobTitle,
-
-              location:
-                applicationToEdit.location,
-
-              jobUrl:
-                applicationToEdit.jobUrl,
-
-              applicationDate:
-                applicationToEdit.applicationDate,
-
-              deadline:
-                applicationToEdit.deadline || '',
-
-              priority:
-                applicationToEdit.priority || 'Medium',
-
-              status:
-                applicationToEdit.status,
-
-              jobType:
-                applicationToEdit.jobType,
-
-              notes:
-                applicationToEdit.notes
-
-            };
-
-          },
-
-          error: (error) => {
+          if (!applicationToEdit) {
 
             console.error(
-              'Error loading application:',
-              error
+              'Application not found:',
+              this.editId
             );
+
+            return;
 
           }
 
-        });
 
-    });
+          this.application = {
+
+            company:
+              applicationToEdit.company,
+
+            jobTitle:
+              applicationToEdit.jobTitle,
+
+            location:
+              applicationToEdit.location,
+
+            jobUrl:
+              applicationToEdit.jobUrl,
+
+            applicationDate:
+              applicationToEdit.applicationDate,
+
+            deadline:
+              applicationToEdit.deadline ||
+              '',
+
+            priority:
+              applicationToEdit.priority ||
+              'Medium',
+
+            status:
+              applicationToEdit.status,
+
+            jobType:
+              applicationToEdit.jobType,
+
+            notes:
+              applicationToEdit.notes
+
+          };
+
+        },
+
+
+        error: (error) => {
+
+          console.error(
+            'Error loading application:',
+            error
+          );
+
+        }
+
+      });
 
   }
+
+
+  /*
+   * Save application.
+   */
 
   async addApplication() {
 
@@ -130,19 +255,38 @@ export class AddApplication implements OnInit {
 
     this.jobTitleError = '';
 
-    if (!this.application.company.trim()) {
+
+    /*
+     * Validate company.
+     */
+
+    if (
+      !this.application.company.trim()
+    ) {
 
       this.companyError =
         'Company name is required.';
 
     }
 
-    if (!this.application.jobTitle.trim()) {
+
+    /*
+     * Validate job title.
+     */
+
+    if (
+      !this.application.jobTitle.trim()
+    ) {
 
       this.jobTitleError =
         'Job title is required.';
 
     }
+
+
+    /*
+     * Stop if validation fails.
+     */
 
     if (
       this.companyError ||
@@ -153,26 +297,47 @@ export class AddApplication implements OnInit {
 
     }
 
+
     try {
+
+
+      /*
+       * Update existing application.
+       */
 
       if (this.editId) {
 
-        await this.firestoreService.updateApplication(
-          this.editId,
-          this.application
-        );
-
-      } else {
-
-        await this.firestoreService.addApplication(
-          this.application
-        );
+        await this.firestoreService
+          .updateApplication(
+            this.editId,
+            this.application
+          );
 
       }
+
+
+      /*
+       * Create new application.
+       */
+
+      else {
+
+        await this.firestoreService
+          .addApplication(
+            this.application
+          );
+
+      }
+
+
+      /*
+       * Return to applications.
+       */
 
       await this.router.navigate([
         '/applications'
       ]);
+
 
     } catch (error) {
 
@@ -180,6 +345,7 @@ export class AddApplication implements OnInit {
         'Error saving application:',
         error
       );
+
 
       alert(
         'There was a problem saving the application.'
@@ -190,3 +356,4 @@ export class AddApplication implements OnInit {
   }
 
 }
+
