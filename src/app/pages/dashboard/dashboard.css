@@ -1,4 +1,3 @@
-
 /* =========================================================
    DASHBOARD
    ========================================================= */
@@ -28,22 +27,30 @@
 
 .dashboard-eyebrow,
 .section-eyebrow {
-  display: block;
+  display: inline-block;
 
-  margin-bottom: 8px;
+  margin-bottom: 10px;
 
-  color: #6b7280;
+  padding: 3px 9px;
 
+  border-radius: 5px;
+
+  background: var(--color-accent-bg);
+
+  color: var(--color-accent);
+
+  font-family: var(--font-mono);
   font-size: 11px;
-  font-weight: 700;
+  font-weight: 500;
 
-  letter-spacing: 0.12em;
+  letter-spacing: 0;
+  text-transform: lowercase;
 }
 
 .dashboard-heading h1 {
   margin: 0;
 
-  color: #111827;
+  color: var(--color-text);
 
   font-size: 32px;
   line-height: 1.2;
@@ -54,7 +61,7 @@
 .dashboard-heading p {
   margin: 10px 0 0;
 
-  color: #6b7280;
+  color: var(--color-text-muted);
 
   font-size: 15px;
   line-height: 1.6;
@@ -76,9 +83,9 @@
 
   padding: 0 16px;
 
-  border-radius: 8px;
+  border-radius: var(--radius-md);
 
-  background: #111827;
+  background: var(--color-primary);
 
   color: #ffffff;
 
@@ -87,26 +94,12 @@
 
   text-decoration: none;
 
-  box-shadow:
-    0 1px 2px rgba(15, 23, 42, 0.08);
-
   transition:
-    background-color 0.2s ease,
-    transform 0.2s ease,
-    box-shadow 0.2s ease;
+    background-color 0.2s ease;
 }
 
 .add-button:hover {
-  background: #1f2937;
-
-  transform: translateY(-1px);
-
-  box-shadow:
-    0 5px 12px rgba(15, 23, 42, 0.12);
-}
-
-.add-button:active {
-  transform: translateY(0);
+  background: var(--color-primary-hover);
 }
 
 .add-button-icon {
@@ -140,19 +133,13 @@
 
   padding: 20px;
 
-  background: #ffffff;
+  background: var(--color-surface);
 
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--color-border);
 
-  border-radius: 12px;
+  border-radius: var(--radius-lg);
 
-  box-shadow:
-    0 1px 2px rgba(15, 23, 42, 0.03);
-
-  transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease,
-    border-color 0.2s ease;
+  transition: border-color 0.2s ease;
 }
 
 .stat-card::before {
@@ -166,22 +153,13 @@
   width: 100%;
   height: 3px;
 
-  background: #111827;
+  background: var(--color-primary);
 
-  opacity: 0;
+  opacity: 0.35;
 }
 
 .stat-card:hover {
-  transform: translateY(-2px);
-
-  border-color: #d1d5db;
-
-  box-shadow:
-    0 8px 20px rgba(15, 23, 42, 0.07);
-}
-
-.stat-card:hover::before {
-  opacity: 1;
+  border-color: var(--color-border-strong);
 }
 
 
@@ -207,14 +185,14 @@
 
   border-radius: 9px;
 
-  background: #f3f4f6;
+  background: var(--color-surface-muted);
 
   font-size: 17px;
 }
 
 
 .stat-label {
-  color: #9ca3af;
+  color: var(--color-text-faint);
 
   font-size: 10px;
   font-weight: 700;
@@ -226,20 +204,21 @@
 .stat-value {
   margin-top: 18px;
 
-  color: #111827;
+  color: var(--color-text);
 
+  font-family: var(--font-mono);
   font-size: 30px;
-  font-weight: 700;
+  font-weight: 500;
 
   line-height: 1;
-  letter-spacing: -0.8px;
+  letter-spacing: -0.2px;
 }
 
 
 .stat-card p {
   margin: 7px 0 0;
 
-  color: #6b7280;
+  color: var(--color-text-muted);
 
   font-size: 13px;
 }
@@ -250,19 +229,23 @@
    ========================================================= */
 
 .stat-interviews::before {
-  background: #2563eb;
+  background: var(--color-info);
+  opacity: 1;
 }
 
 .stat-offers::before {
-  background: #16a34a;
+  background: var(--color-success);
+  opacity: 1;
 }
 
 .stat-rejected::before {
-  background: #dc2626;
+  background: var(--color-danger);
+  opacity: 1;
 }
 
 .stat-total::before {
-  background: #111827;
+  background: var(--color-accent);
+  opacity: 1;
 }
 
 
@@ -291,11 +274,11 @@
 
   padding: 16px 18px;
 
-  background: #ffffff;
+  background: var(--color-surface);
 
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--color-border);
 
-  border-radius: 10px;
+  border-radius: var(--radius-md);
 }
 
 
@@ -312,7 +295,7 @@
 
   border-radius: 8px;
 
-  background: #f3f4f6;
+  background: var(--color-surface-muted);
 
   font-size: 16px;
 }
@@ -321,9 +304,11 @@
 .secondary-stat strong {
   display: block;
 
-  color: #111827;
+  color: var(--color-text);
 
+  font-family: var(--font-mono);
   font-size: 20px;
+  font-weight: 500;
 
   line-height: 1.1;
 }
@@ -334,19 +319,19 @@
 
   margin-top: 3px;
 
-  color: #6b7280;
+  color: var(--color-text-muted);
 
   font-size: 12px;
 }
 
 
 .secondary-danger .secondary-stat-icon {
-  background: #fef2f2;
+  background: var(--color-danger-bg);
 }
 
 
 .secondary-priority .secondary-stat-icon {
-  background: #fffbeb;
+  background: var(--color-warning-bg);
 }
 
 
@@ -375,7 +360,7 @@
 .section-header h2 {
   margin: 0;
 
-  color: #111827;
+  color: var(--color-text);
 
   font-size: 20px;
   line-height: 1.3;
@@ -387,7 +372,7 @@
 .section-header p {
   margin: 5px 0 0;
 
-  color: #6b7280;
+  color: var(--color-text-muted);
 
   font-size: 13px;
 }
@@ -400,34 +385,32 @@
 
   gap: 6px;
 
-  color: #374151;
+  color: var(--color-accent);
 
   font-size: 13px;
   font-weight: 600;
 
   text-decoration: none;
 
-  transition:
-    color 0.2s ease,
-    gap 0.2s ease;
+  transition: gap 0.2s ease;
 }
 
 
 .view-all-link:hover {
-  color: #111827;
-
   gap: 9px;
 }
 
 
 /* =========================================================
-   RECENT APPLICATIONS
+   RECENT APPLICATIONS — ledger rows, not cards
    ========================================================= */
 
 .recent-applications {
   display: grid;
 
-  gap: 10px;
+  gap: 0;
+
+  border-top: 1px solid var(--color-border);
 }
 
 
@@ -440,30 +423,23 @@
 
   gap: 20px;
 
-  min-height: 72px;
+  min-height: 68px;
 
-  padding: 14px 16px;
+  padding: 14px 4px;
 
-  background: #ffffff;
+  background: transparent;
 
-  border: 1px solid #e5e7eb;
+  border: none;
+  border-bottom: 1px solid var(--color-border);
 
-  border-radius: 10px;
+  border-radius: 0;
 
-  transition:
-    border-color 0.2s ease,
-    box-shadow 0.2s ease,
-    transform 0.2s ease;
+  transition: background-color 0.15s ease;
 }
 
 
 .recent-application-card:hover {
-  border-color: #d1d5db;
-
-  transform: translateY(-1px);
-
-  box-shadow:
-    0 5px 14px rgba(15, 23, 42, 0.05);
+  background: var(--color-surface-muted);
 }
 
 
@@ -479,8 +455,8 @@
 
 
 .company-avatar {
-  width: 40px;
-  height: 40px;
+  width: 34px;
+  height: 34px;
 
   display: flex;
 
@@ -489,14 +465,14 @@
 
   flex-shrink: 0;
 
-  border-radius: 9px;
+  border-radius: 50%;
 
-  background: #f3f4f6;
+  background: var(--color-accent-bg);
 
-  color: #374151;
+  color: var(--color-accent);
 
-  font-size: 15px;
-  font-weight: 700;
+  font-size: 13px;
+  font-weight: 600;
 }
 
 
@@ -510,7 +486,7 @@
 
   overflow: hidden;
 
-  color: #111827;
+  color: var(--color-text);
 
   font-size: 14px;
   font-weight: 600;
@@ -524,7 +500,7 @@
 .recent-application-card p {
   margin: 3px 0 0;
 
-  color: #6b7280;
+  color: var(--color-text-muted);
 
   font-size: 13px;
 }
@@ -553,11 +529,11 @@
 
   align-items: center;
 
-  min-height: 28px;
+  min-height: 26px;
 
   padding: 0 9px;
 
-  border-radius: 6px;
+  border-radius: var(--radius-sm);
 
   font-size: 11px;
   font-weight: 600;
@@ -567,42 +543,42 @@
 
 
 .status {
-  background: #f3f4f6;
+  background: var(--color-surface-muted);
 
-  color: #4b5563;
+  color: var(--color-text-secondary);
 }
 
 
 .status-applied {
-  background: #eff6ff;
-  color: #1d4ed8;
+  background: var(--color-info-bg);
+  color: var(--color-info);
 }
 
 
 .status-interview {
-  background: #fefce8;
-  color: #a16207;
+  background: var(--color-warning-bg);
+  color: var(--color-warning);
 }
 
 
 .status-offer {
-  background: #f0fdf4;
-  color: #15803d;
+  background: var(--color-success-bg);
+  color: var(--color-success);
 }
 
 
 .status-rejected {
-  background: #fef2f2;
-  color: #b91c1c;
+  background: var(--color-danger-bg);
+  color: var(--color-danger);
 }
 
 
 .job-type {
-  background: #f8fafc;
+  background: transparent;
 
-  color: #6b7280;
+  color: var(--color-text-muted);
 
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--color-border);
 }
 
 
@@ -623,11 +599,11 @@
 
   padding: 40px 24px;
 
-  background: #ffffff;
+  background: var(--color-surface);
 
-  border: 1px dashed #d1d5db;
+  border: 1px dashed var(--color-border-strong);
 
-  border-radius: 12px;
+  border-radius: var(--radius-lg);
 
   text-align: center;
 }
@@ -646,7 +622,7 @@
 
   border-radius: 12px;
 
-  background: #f3f4f6;
+  background: var(--color-surface-muted);
 
   font-size: 20px;
 }
@@ -655,7 +631,7 @@
 .recent-empty h3 {
   margin: 0;
 
-  color: #111827;
+  color: var(--color-text);
 
   font-size: 17px;
 }
@@ -666,7 +642,7 @@
 
   margin: 7px 0 20px;
 
-  color: #6b7280;
+  color: var(--color-text-muted);
 
   font-size: 13px;
 
@@ -691,11 +667,11 @@
 
   padding: 40px 24px;
 
-  background: #ffffff;
+  background: var(--color-surface);
 
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--color-border);
 
-  border-radius: 12px;
+  border-radius: var(--radius-lg);
 
   text-align: center;
 }
@@ -704,7 +680,7 @@
 .dashboard-state h2 {
   margin: 16px 0 8px;
 
-  color: #111827;
+  color: var(--color-text);
 
   font-size: 20px;
 }
@@ -715,7 +691,7 @@
 
   margin: 0;
 
-  color: #6b7280;
+  color: var(--color-text-muted);
 
   font-size: 14px;
 
@@ -727,9 +703,9 @@
   width: 34px;
   height: 34px;
 
-  border: 3px solid #e5e7eb;
+  border: 3px solid var(--color-border);
 
-  border-top-color: #111827;
+  border-top-color: var(--color-accent);
 
   border-radius: 50%;
 
@@ -759,9 +735,9 @@
 
   border-radius: 50%;
 
-  background: #fee2e2;
+  background: var(--color-danger-bg);
 
-  color: #b91c1c;
+  color: var(--color-danger);
 
   font-size: 22px;
   font-weight: 700;
@@ -769,7 +745,7 @@
 
 
 .dashboard-error {
-  border-color: #fecaca;
+  border-color: var(--color-danger);
 }
 
 
@@ -779,9 +755,9 @@
   padding: 10px 18px;
 
   border: none;
-  border-radius: 8px;
+  border-radius: var(--radius-md);
 
-  background: #111827;
+  background: var(--color-primary);
 
   color: #ffffff;
 
@@ -790,16 +766,12 @@
 
   cursor: pointer;
 
-  transition:
-    background-color 0.2s ease,
-    transform 0.2s ease;
+  transition: background-color 0.2s ease;
 }
 
 
 .dashboard-retry-button:hover {
-  background: #1f2937;
-
-  transform: translateY(-1px);
+  background: var(--color-primary-hover);
 }
 
 
@@ -919,4 +891,3 @@
   }
 
 }
-
