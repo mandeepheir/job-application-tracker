@@ -1,59 +1,106 @@
-# JobApplicationTracker
+# JobTrack — Job Application Tracker
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.0.0.
+JobTrack is a full-stack job application tracking web application built with Angular and Firebase.
 
-## Development server
+It helps users organize job applications, monitor application progress, manage deadlines, and keep their job-search information in one place.
 
-To start a local development server, run:
+## 🚀 Live Demo
 
-```bash
-ng serve
-```
+https://jobtrack-alpha-one.vercel.app
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+## ✨ Features
 
-## Code scaffolding
+### 🔐 Authentication
+- User registration with email and password
+- User login and logout
+- Firebase Authentication
+- Protected application routes using an Angular authentication guard
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+### 📋 Application Management
+- Add job applications
+- View all applications
+- View individual application details
+- Edit applications
+- Delete applications
+- Track application status
+- Track job type
+- Record company and job title
+- Store location and job URL
+- Add notes
+- Set application deadlines
+- Set application priority
 
-```bash
-ng generate component component-name
-```
+### 📊 Dashboard
+The dashboard provides an overview of the job search, including:
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+- Total applications
+- Interview count
+- Offer count
+- Rejected applications
+- Upcoming deadlines
+- Overdue applications
+- High-priority applications
+- Recent applications
 
-```bash
-ng generate --help
-```
+### 🔎 Search & Filtering
+Applications can be filtered by:
 
-## Building
+- Company
+- Job title
+- Application status
+- Job type
 
-To build the project run:
+### 🤖 AI Analyzer
+JobTrack includes an AI Analyzer interface that evaluates job-related information using rule-based analysis and provides suggestions.
 
-```bash
-ng build
-```
+> Note: The current version does not use an external generative AI API. The analyzer is implemented using application logic.
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+### ⚙️ Settings
+The settings page includes:
 
-## Running unit tests
+- Profile information
+- Job-search preferences
+- Application defaults
+- Compact mode
+- Local data export
+- Local data clearing
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+### 🔥 Firebase / Firestore
+Application data is stored in Cloud Firestore and associated with the authenticated user's Firebase UID.
 
-```bash
-ng test
-```
+Firestore security rules restrict users to their own application data.
 
-## Running end-to-end tests
+## 🛠️ Tech Stack
 
-For end-to-end (e2e) testing, run:
+- Angular 20
+- TypeScript
+- HTML5
+- CSS3
+- Firebase Authentication
+- Cloud Firestore
+- AngularFire
+- Git
+- GitHub
+- Vercel
 
-```bash
-ng e2e
-```
+## 🏗️ Architecture
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+The application follows a component-based Angular structure.
 
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+```text
+src/
+└── app/
+    ├── guards/
+    ├── models/
+    ├── pages/
+    │   ├── add-application/
+    │   ├── ai-analyzer/
+    │   ├── application-details/
+    │   ├── applications/
+    │   ├── dashboard/
+    │   ├── login/
+    │   ├── settings/
+    │   └── signup/
+    └── services/
+        ├── auth.ts
+        └── firestore.ts
