@@ -1,20 +1,123 @@
-/* You can add global styles to this file, and also import other style files */
+
+/* =========================================================
+   JOBTRACK GLOBAL DESIGN SYSTEM
+   ========================================================= */
+
+:root {
+  /* Colors */
+  --color-primary: #111827;
+  --color-primary-hover: #1f2937;
+
+  --color-text: #111827;
+  --color-text-secondary: #4b5563;
+  --color-text-muted: #6b7280;
+
+  --color-background: #f8fafc;
+  --color-surface: #ffffff;
+
+  --color-border: #e5e7eb;
+  --color-border-light: #f1f5f9;
+
+  --color-success: #15803d;
+  --color-success-bg: #f0fdf4;
+
+  --color-warning: #b45309;
+  --color-warning-bg: #fffbeb;
+
+  --color-danger: #b91c1c;
+  --color-danger-bg: #fef2f2;
+
+  --color-info: #1d4ed8;
+  --color-info-bg: #eff6ff;
+
+  /* Spacing */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 12px;
+  --space-lg: 16px;
+  --space-xl: 20px;
+  --space-2xl: 24px;
+  --space-3xl: 32px;
+  --space-4xl: 40px;
+
+  /* Radius */
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+
+  /* Shadows */
+  --shadow-sm:
+    0 1px 2px rgba(15, 23, 42, 0.05);
+
+  --shadow-md:
+    0 4px 12px rgba(15, 23, 42, 0.06);
+
+  --shadow-lg:
+    0 10px 30px rgba(15, 23, 42, 0.08);
+
+  /* Layout */
+  --content-max-width: 1200px;
+
+  /* Typography */
+  --font-family:
+    Inter,
+    ui-sans-serif,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    Helvetica,
+    Arial,
+    sans-serif;
+
+  /* Animation */
+  --transition-fast:
+    150ms ease;
+
+  --transition-normal:
+    200ms ease;
+}
+
+
+/* =========================================================
+   GLOBAL RESET
+   ========================================================= */
+
 * {
   box-sizing: border-box;
 }
 
-html,
+
+html {
+  margin: 0;
+  padding: 0;
+  scroll-behavior: smooth;
+}
+
+
 body {
   margin: 0;
   padding: 0;
-  font-family: Arial, Helvetica, sans-serif;
-  background: #f9fafb;
-  color: #111827;
+
+  min-height: 100vh;
+
+  font-family: var(--font-family);
+
+  background: var(--color-background);
+
+  color: var(--color-text);
+
+  line-height: 1.5;
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-body {
-  min-height: 100vh;
-}
+
+/* =========================================================
+   FORM ELEMENTS
+   ========================================================= */
 
 button,
 input,
@@ -22,3 +125,174 @@ select,
 textarea {
   font-family: inherit;
 }
+
+
+button {
+  -webkit-tap-highlight-color: transparent;
+}
+
+
+input,
+select,
+textarea {
+  color: var(--color-text);
+}
+
+
+input::placeholder,
+textarea::placeholder {
+  color: #9ca3af;
+}
+
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+}
+
+
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+button:focus-visible,
+a:focus-visible {
+  outline: 2px solid #111827;
+  outline-offset: 2px;
+}
+
+
+/* =========================================================
+   LINKS
+   ========================================================= */
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+
+/* =========================================================
+   BUTTONS
+   ========================================================= */
+
+button {
+  border: 0;
+}
+
+
+button:not(:disabled) {
+  cursor: pointer;
+}
+
+
+button:disabled {
+  cursor: not-allowed;
+}
+
+
+/* =========================================================
+   IMAGES
+   ========================================================= */
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+
+/* =========================================================
+   TEXT SELECTION
+   ========================================================= */
+
+::selection {
+  background: #dbeafe;
+  color: #111827;
+}
+
+
+/* =========================================================
+   SCROLLBAR
+   ========================================================= */
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 999px;
+}
+
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+
+/* =========================================================
+   COMPACT MODE
+   ========================================================= */
+
+body.compact-mode {
+  --space-lg: 12px;
+  --space-xl: 16px;
+  --space-2xl: 20px;
+  --space-3xl: 24px;
+  --space-4xl: 32px;
+}
+
+
+body.compact-mode .main-content {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+}
+
+
+/* =========================================================
+   MOBILE DEFAULTS
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+  body {
+    font-size: 15px;
+  }
+
+  button,
+  input,
+  select,
+  textarea {
+    font-size: 16px;
+  }
+
+}
+

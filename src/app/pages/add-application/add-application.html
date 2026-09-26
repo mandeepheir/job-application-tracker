@@ -1,262 +1,421 @@
 <div class="form-page">
 
-  <h1>
-    {{ editId !== null ? 'Edit Job Application' : 'Add Job Application' }}
-  </h1>
+  <!-- =========================================
+       PAGE HEADER
+       ========================================= -->
 
-  <p class="subtitle">
-    {{
-      editId !== null
-        ? 'Update your job application details.'
-        : 'Add a new job application to your tracker.'
-    }}
-  </p>
+  <header class="form-header">
 
+    <div>
 
-  <form (ngSubmit)="addApplication()">
+      <span class="page-eyebrow">
+        JOB TRACKER
+      </span>
 
-    <!-- Company -->
-    <div class="form-group">
+      <h1>
+        {{ editId !== null ? 'Edit Job Application' : 'Add Job Application' }}
+      </h1>
 
-      <label for="company">
-        Company
-      </label>
-
-      <input
-        id="company"
-        type="text"
-        placeholder="e.g. Google"
-        name="company"
-        [(ngModel)]="application.company"
-      />
-
-      @if (companyError) {
-        <p class="error-message">
-          {{ companyError }}
-        </p>
-      }
+      <p class="subtitle">
+        {{
+          editId !== null
+            ? 'Update your job application details.'
+            : 'Add a new job application to your tracker.'
+        }}
+      </p>
 
     </div>
 
-
-    <!-- Job Title -->
-    <div class="form-group">
-
-      <label for="jobTitle">
-        Job Title
-      </label>
-
-      <input
-        id="jobTitle"
-        type="text"
-        placeholder="e.g. Software Developer"
-        name="jobTitle"
-        [(ngModel)]="application.jobTitle"
-      />
-
-      @if (jobTitleError) {
-        <p class="error-message">
-          {{ jobTitleError }}
-        </p>
-      }
-
-    </div>
+  </header>
 
 
-    <!-- Location -->
-    <div class="form-group">
+  <!-- =========================================
+       FORM
+       ========================================= -->
 
-      <label for="location">
-        Location
-      </label>
+  <form
+    class="application-form"
+    (ngSubmit)="addApplication()"
+  >
 
-      <input
-        id="location"
-        type="text"
-        placeholder="e.g. Toronto, Canada"
-        name="location"
-        [(ngModel)]="application.location"
-      />
+    <!-- =========================================
+         BASIC INFORMATION
+         ========================================= -->
 
-    </div>
+    <section class="form-section">
 
+      <div class="section-heading">
 
-    <!-- Job URL -->
-    <div class="form-group">
+        <span class="section-number">
+          01
+        </span>
 
-      <label for="jobUrl">
-        Job URL
-      </label>
+        <div>
 
-      <input
-        id="jobUrl"
-        type="url"
-        placeholder="https://..."
-        name="jobUrl"
-        [(ngModel)]="application.jobUrl"
-      />
+          <h2>
+            Basic Information
+          </h2>
 
-    </div>
+          <p>
+            Tell us about the company and position.
+          </p>
 
+        </div>
 
-    <!-- Application Date -->
-    <div class="form-group">
-
-      <label for="applicationDate">
-        Application Date
-      </label>
-
-      <input
-        id="applicationDate"
-        type="date"
-        name="applicationDate"
-        [(ngModel)]="application.applicationDate"
-      />
-
-    </div>
+      </div>
 
 
-    <!-- Deadline -->
-    <div class="form-group">
+      <div class="form-grid">
 
-      <label for="deadline">
-        Application Deadline
-      </label>
+        <!-- Company -->
 
-      <input
-        id="deadline"
-        type="date"
-        name="deadline"
-        [(ngModel)]="application.deadline"
-      />
+        <div class="form-group">
 
-    </div>
+          <label for="company">
+            Company
+            <span class="required">*</span>
+          </label>
+
+          <input
+            id="company"
+            type="text"
+            placeholder="e.g. Google"
+            name="company"
+            [(ngModel)]="application.company"
+          />
+
+          @if (companyError) {
+
+            <p class="error-message">
+              {{ companyError }}
+            </p>
+
+          }
+
+        </div>
 
 
-    <!-- Priority -->
-    <div class="form-group">
+        <!-- Job Title -->
 
-      <label for="priority">
-        Priority
-      </label>
+        <div class="form-group">
 
-      <select
-        id="priority"
-        name="priority"
-        [(ngModel)]="application.priority"
+          <label for="jobTitle">
+            Job Title
+            <span class="required">*</span>
+          </label>
+
+          <input
+            id="jobTitle"
+            type="text"
+            placeholder="e.g. Software Developer"
+            name="jobTitle"
+            [(ngModel)]="application.jobTitle"
+          />
+
+          @if (jobTitleError) {
+
+            <p class="error-message">
+              {{ jobTitleError }}
+            </p>
+
+          }
+
+        </div>
+
+
+        <!-- Location -->
+
+        <div class="form-group">
+
+          <label for="location">
+            Location
+          </label>
+
+          <input
+            id="location"
+            type="text"
+            placeholder="e.g. Toronto, Canada"
+            name="location"
+            [(ngModel)]="application.location"
+          />
+
+        </div>
+
+
+        <!-- Job URL -->
+
+        <div class="form-group">
+
+          <label for="jobUrl">
+            Job URL
+          </label>
+
+          <input
+            id="jobUrl"
+            type="url"
+            placeholder="https://..."
+            name="jobUrl"
+            [(ngModel)]="application.jobUrl"
+          />
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================================
+         APPLICATION DETAILS
+         ========================================= -->
+
+    <section class="form-section">
+
+      <div class="section-heading">
+
+        <span class="section-number">
+          02
+        </span>
+
+        <div>
+
+          <h2>
+            Application Details
+          </h2>
+
+          <p>
+            Track dates, status, priority, and job type.
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <div class="form-grid">
+
+        <!-- Application Date -->
+
+        <div class="form-group">
+
+          <label for="applicationDate">
+            Application Date
+          </label>
+
+          <input
+            id="applicationDate"
+            type="date"
+            name="applicationDate"
+            [(ngModel)]="application.applicationDate"
+          />
+
+        </div>
+
+
+        <!-- Deadline -->
+
+        <div class="form-group">
+
+          <label for="deadline">
+            Application Deadline
+          </label>
+
+          <input
+            id="deadline"
+            type="date"
+            name="deadline"
+            [(ngModel)]="application.deadline"
+          />
+
+        </div>
+
+
+        <!-- Priority -->
+
+        <div class="form-group">
+
+          <label for="priority">
+            Priority
+          </label>
+
+          <select
+            id="priority"
+            name="priority"
+            [(ngModel)]="application.priority"
+          >
+
+            <option value="Low">
+              Low
+            </option>
+
+            <option value="Medium">
+              Medium
+            </option>
+
+            <option value="High">
+              High
+            </option>
+
+          </select>
+
+        </div>
+
+
+        <!-- Status -->
+
+        <div class="form-group">
+
+          <label for="status">
+            Status
+          </label>
+
+          <select
+            id="status"
+            name="status"
+            [(ngModel)]="application.status"
+          >
+
+            <option value="Applied">
+              Applied
+            </option>
+
+            <option value="Interview">
+              Interview
+            </option>
+
+            <option value="Technical">
+              Technical Interview
+            </option>
+
+            <option value="Offer">
+              Offer
+            </option>
+
+            <option value="Rejected">
+              Rejected
+            </option>
+
+          </select>
+
+        </div>
+
+
+        <!-- Job Type -->
+
+        <div class="form-group">
+
+          <label for="jobType">
+            Job Type
+          </label>
+
+          <select
+            id="jobType"
+            name="jobType"
+            [(ngModel)]="application.jobType"
+          >
+
+            <option value="Full-time">
+              Full-time
+            </option>
+
+            <option value="Part-time">
+              Part-time
+            </option>
+
+            <option value="Internship">
+              Internship
+            </option>
+
+            <option value="Contract">
+              Contract
+            </option>
+
+            <option value="Co-op">
+              Co-op
+            </option>
+
+          </select>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================================
+         NOTES
+         ========================================= -->
+
+    <section class="form-section">
+
+      <div class="section-heading">
+
+        <span class="section-number">
+          03
+        </span>
+
+        <div>
+
+          <h2>
+            Notes
+          </h2>
+
+          <p>
+            Add anything useful about this application.
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <div class="form-group">
+
+        <label for="notes">
+          Application Notes
+        </label>
+
+        <textarea
+          id="notes"
+          name="notes"
+          rows="6"
+          placeholder="Add notes about this application..."
+          [(ngModel)]="application.notes"
+        ></textarea>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================================
+         FORM ACTIONS
+         ========================================= -->
+
+    <div class="form-actions">
+
+      <span class="required-hint">
+        <span class="required">*</span>
+        Required fields
+      </span>
+
+      <button
+        type="submit"
+        class="submit-button"
       >
 
-        <option value="Low">
-          Low
-        </option>
+        <span>
+          {{ editId !== null ? 'Save Changes' : 'Add Application' }}
+        </span>
 
-        <option value="Medium">
-          Medium
-        </option>
+        <span class="submit-arrow">
+          →
+        </span>
 
-        <option value="High">
-          High
-        </option>
-
-      </select>
+      </button>
 
     </div>
-
-
-    <!-- Status -->
-    <div class="form-group">
-
-      <label for="status">
-        Status
-      </label>
-
-      <select
-        id="status"
-        name="status"
-        [(ngModel)]="application.status"
-      >
-
-        <option value="Applied">
-          Applied
-        </option>
-
-        <option value="Interview">
-          Interview
-        </option>
-
-        <option value="Technical">
-          Technical Interview
-        </option>
-
-        <option value="Offer">
-          Offer
-        </option>
-
-        <option value="Rejected">
-          Rejected
-        </option>
-
-      </select>
-
-    </div>
-
-
-    <!-- Job Type -->
-    <div class="form-group">
-
-      <label for="jobType">
-        Job Type
-      </label>
-
-      <select
-        id="jobType"
-        name="jobType"
-        [(ngModel)]="application.jobType"
-      >
-
-        <option value="Full-time">
-          Full-time
-        </option>
-
-        <option value="Part-time">
-          Part-time
-        </option>
-
-        <option value="Internship">
-          Internship
-        </option>
-
-        <option value="Contract">
-          Contract
-        </option>
-
-      </select>
-
-    </div>
-
-
-    <!-- Notes -->
-    <div class="form-group">
-
-      <label for="notes">
-        Notes
-      </label>
-
-      <textarea
-        id="notes"
-        name="notes"
-        rows="5"
-        placeholder="Add notes about this application..."
-        [(ngModel)]="application.notes"
-      ></textarea>
-
-    </div>
-
-
-    <!-- Submit -->
-    <button type="submit">
-      {{ editId !== null ? 'Save Changes' : 'Add Application' }}
-    </button>
 
   </form>
 

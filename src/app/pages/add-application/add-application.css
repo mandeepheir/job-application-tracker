@@ -1,91 +1,463 @@
+/* =========================================================
+   FORM PAGE
+   ========================================================= */
+
 .form-page {
-  max-width: 700px;
+  width: 100%;
+
+  max-width: 900px;
+
   margin: 0 auto;
 }
 
-.form-page h1 {
-  margin: 0 0 8px;
-  font-size: 32px;
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.form-header {
+  margin-bottom: 28px;
 }
+
+
+.page-eyebrow {
+  display: block;
+
+  margin-bottom: 8px;
+
+  color: #6b7280;
+
+  font-size: 11px;
+  font-weight: 700;
+
+  letter-spacing: 0.12em;
+}
+
+
+.form-header h1 {
+  margin: 0;
+
+  color: #111827;
+
+  font-size: 32px;
+
+  line-height: 1.2;
+
+  letter-spacing: -0.8px;
+}
+
 
 .subtitle {
+  margin: 9px 0 0;
+
   color: #6b7280;
-  margin: 0 0 32px;
+
+  font-size: 15px;
+
+  line-height: 1.6;
 }
+
+
+/* =========================================================
+   FORM CONTAINER
+   ========================================================= */
+
+.application-form {
+  overflow: hidden;
+
+  background: #ffffff;
+
+  border: 1px solid #e5e7eb;
+
+  border-radius: 14px;
+
+  box-shadow:
+    0 1px 2px rgba(15, 23, 42, 0.03);
+}
+
+
+/* =========================================================
+   FORM SECTION
+   ========================================================= */
+
+.form-section {
+  padding: 28px 30px;
+
+  border-bottom: 1px solid #f1f5f9;
+}
+
+
+.section-heading {
+  display: flex;
+
+  align-items: flex-start;
+
+  gap: 12px;
+
+  margin-bottom: 24px;
+}
+
+
+.section-number {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 30px;
+  height: 30px;
+
+  flex-shrink: 0;
+
+  border-radius: 8px;
+
+  background: #f3f4f6;
+
+  color: #374151;
+
+  font-size: 11px;
+
+  font-weight: 700;
+}
+
+
+.section-heading h2 {
+  margin: 0;
+
+  color: #111827;
+
+  font-size: 16px;
+
+  font-weight: 650;
+}
+
+
+.section-heading p {
+  margin: 3px 0 0;
+
+  color: #9ca3af;
+
+  font-size: 12px;
+}
+
+
+/* =========================================================
+   FORM GRID
+   ========================================================= */
+
+.form-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 20px 18px;
+}
+
+
+/* =========================================================
+   FORM GROUP
+   ========================================================= */
 
 .form-group {
-  margin-bottom: 20px;
+  min-width: 0;
 }
 
-label {
+
+.form-group label {
   display: block;
-  margin-bottom: 8px;
+
+  margin-bottom: 7px;
+
+  color: #374151;
+
+  font-size: 13px;
+
   font-weight: 600;
 }
 
-input,
-select,
-textarea {
+
+.required {
+  color: #dc2626;
+
+  margin-left: 2px;
+}
+
+
+/* =========================================================
+   INPUTS
+   ========================================================= */
+
+.form-group input,
+.form-group select,
+.form-group textarea {
   width: 100%;
-  padding: 12px;
+
   border: 1px solid #d1d5db;
+
   border-radius: 8px;
-  font-size: 16px;
-  font-family: inherit;
-  box-sizing: border-box;
+
   background: #ffffff;
+
+  color: #111827;
+
+  font-family: inherit;
+
+  font-size: 14px;
+
+  box-sizing: border-box;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background-color 0.2s ease;
 }
 
-input:focus,
-select:focus,
-textarea:focus {
-  outline: none;
-  border-color: #111827;
+
+.form-group input,
+.form-group select {
+  min-height: 44px;
+
+  padding: 0 12px;
 }
 
-textarea {
+
+.form-group textarea {
+  min-height: 130px;
+
+  padding: 12px;
+
+  line-height: 1.6;
+
   resize: vertical;
 }
 
-button {
-  padding: 12px 20px;
-  border: none;
-  border-radius: 8px;
-  background: #111827;
-  color: white;
-  font-size: 16px;
-  font-weight: 600;
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+  color: #9ca3af;
+}
+
+
+.form-group input:hover,
+.form-group select:hover,
+.form-group textarea:hover {
+  border-color: #9ca3af;
+}
+
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  outline: none;
+
+  border-color: #111827;
+
+  box-shadow:
+    0 0 0 3px rgba(17, 24, 39, 0.06);
+}
+
+
+/* =========================================================
+   SELECT
+   ========================================================= */
+
+.form-group select {
   cursor: pointer;
 }
 
-button:hover {
-  opacity: 0.9;
+
+/* =========================================================
+   ERROR
+   ========================================================= */
+
+.error-message {
+  margin: 6px 0 0;
+
+  color: #b91c1c;
+
+  font-size: 12px;
+
+  line-height: 1.4;
 }
 
-@media (max-width: 600px) {
 
-  .form-page h1 {
+/* =========================================================
+   FORM ACTIONS
+   ========================================================= */
+
+.form-actions {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 20px;
+
+  padding: 20px 30px;
+
+  background: #fafafa;
+}
+
+
+.required-hint {
+  color: #9ca3af;
+
+  font-size: 12px;
+}
+
+
+.required-hint .required {
+  color: #dc2626;
+}
+
+
+/* =========================================================
+   SUBMIT BUTTON
+   ========================================================= */
+
+.submit-button {
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 10px;
+
+  min-height: 44px;
+
+  padding: 0 18px;
+
+  border: 0;
+
+  border-radius: 8px;
+
+  background: #111827;
+
+  color: #ffffff;
+
+  font-family: inherit;
+
+  font-size: 14px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 1px 2px rgba(15, 23, 42, 0.08);
+
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+
+.submit-button:hover {
+  background: #1f2937;
+
+  transform: translateY(-1px);
+
+  box-shadow:
+    0 5px 12px rgba(15, 23, 42, 0.12);
+}
+
+
+.submit-button:active {
+  transform: translateY(0);
+}
+
+
+.submit-arrow {
+  font-size: 17px;
+
+  line-height: 1;
+}
+
+
+/* =========================================================
+   RESPONSIVE — TABLET
+   ========================================================= */
+
+@media (max-width: 700px) {
+
+  .form-page {
+    max-width: 100%;
+  }
+
+  .form-header h1 {
     font-size: 28px;
   }
 
-  input,
-  select,
-  textarea {
-    font-size: 16px;
+  .form-grid {
+    grid-template-columns: 1fr;
   }
 
-  button {
+  .form-section {
+    padding: 24px 20px;
+  }
+
+  .form-actions {
+    padding: 18px 20px;
+  }
+
+}
+
+
+/* =========================================================
+   RESPONSIVE — MOBILE
+   ========================================================= */
+
+@media (max-width: 500px) {
+
+  .form-header {
+    margin-bottom: 22px;
+  }
+
+  .form-header h1 {
+    font-size: 25px;
+  }
+
+  .subtitle {
+    font-size: 14px;
+  }
+
+  .application-form {
+    border-radius: 10px;
+  }
+
+  .form-section {
+    padding: 22px 16px;
+  }
+
+  .section-heading {
+    margin-bottom: 20px;
+  }
+
+  .section-heading h2 {
+    font-size: 15px;
+  }
+
+  .section-heading p {
+    font-size: 11px;
+  }
+
+  .form-actions {
+    flex-direction: column;
+
+    align-items: stretch;
+
+    padding: 18px 16px;
+  }
+
+  .required-hint {
+    text-align: center;
+  }
+
+  .submit-button {
     width: 100%;
   }
 
-}
-.error-message {
-  margin: 6px 0 0;
-  color: #dc2626;
-  font-size: 14px;
-}
-.error-message {
-  margin: 6px 0 0;
-  font-size: 14px;
-  color: #dc2626;
 }

@@ -2,11 +2,13 @@
 
   @if (application) {
 
-    <!-- Header -->
+    <!-- =========================================
+         HEADER
+         ========================================= -->
 
-    <div class="details-header">
+    <header class="details-header">
 
-      <div>
+      <div class="header-main">
 
         <a
           routerLink="/applications"
@@ -15,36 +17,87 @@
           ← Back to Applications
         </a>
 
-        <h1>
-          {{ application.jobTitle }}
-        </h1>
+        <div class="title-row">
 
-        <p class="company">
-          {{ application.company }}
-        </p>
+          <div class="company-avatar">
+            {{ application.company.charAt(0).toUpperCase() }}
+          </div>
+
+          <div>
+
+            <span class="page-eyebrow">
+              APPLICATION DETAILS
+            </span>
+
+            <h1>
+              {{ application.jobTitle }}
+            </h1>
+
+            <p class="company">
+              {{ application.company }}
+            </p>
+
+          </div>
+
+        </div>
 
       </div>
 
-      <span class="status">
+
+      <span
+        class="status-badge"
+        [class.status-applied]="
+          application.status === 'Applied'
+        "
+        [class.status-interview]="
+          application.status === 'Interview' ||
+          application.status === 'Technical'
+        "
+        [class.status-offer]="
+          application.status === 'Offer'
+        "
+        [class.status-rejected]="
+          application.status === 'Rejected'
+        "
+      >
         {{ application.status }}
       </span>
 
-    </div>
+    </header>
 
 
-    <!-- Main Content -->
+    <!-- =========================================
+         CONTENT
+         ========================================= -->
 
-    <div class="details-grid">
+    <main class="details-grid">
 
-      <!-- Application Information -->
+      <!-- =========================================
+           APPLICATION INFORMATION
+           ========================================= -->
 
-      <div class="details-card">
+      <section class="details-card application-info-card">
 
-        <h2>
-          Application Details
-        </h2>
+        <div class="card-heading">
+
+          <div>
+
+            <span class="section-eyebrow">
+              OVERVIEW
+            </span>
+
+            <h2>
+              Application Details
+            </h2>
+
+          </div>
+
+        </div>
+
 
         <div class="detail-list">
+
+          <!-- Location -->
 
           <div class="detail-item">
 
@@ -59,6 +112,8 @@
           </div>
 
 
+          <!-- Job Type -->
+
           <div class="detail-item">
 
             <span class="detail-label">
@@ -66,11 +121,13 @@
             </span>
 
             <span class="detail-value">
-              {{ application.jobType }}
+              {{ application.jobType || 'Not specified' }}
             </span>
 
           </div>
 
+
+          <!-- Application Date -->
 
           <div class="detail-item">
 
@@ -85,6 +142,8 @@
           </div>
 
 
+          <!-- Deadline -->
+
           <div class="detail-item">
 
             <span class="detail-label">
@@ -98,6 +157,8 @@
           </div>
 
 
+          <!-- Priority -->
+
           <div class="detail-item">
 
             <span class="detail-label">
@@ -106,9 +167,15 @@
 
             <span
               class="priority"
-              [class.high]="application.priority === 'High'"
-              [class.medium]="application.priority === 'Medium'"
-              [class.low]="application.priority === 'Low'"
+              [class.high]="
+                application.priority === 'High'
+              "
+              [class.medium]="
+                application.priority === 'Medium'
+              "
+              [class.low]="
+                application.priority === 'Low'
+              "
             >
               {{ application.priority }}
             </span>
@@ -116,10 +183,12 @@
           </div>
 
 
+          <!-- Status -->
+
           <div class="detail-item">
 
             <span class="detail-label">
-              Status
+              Current Status
             </span>
 
             <span class="detail-value">
@@ -130,41 +199,83 @@
 
         </div>
 
-      </div>
+      </section>
 
 
-      <!-- Notes -->
+      <!-- =========================================
+           NOTES
+           ========================================= -->
 
-      <div class="details-card">
+      <section class="details-card">
 
-        <h2>
-          Notes
-        </h2>
+        <div class="card-heading">
+
+          <div>
+
+            <span class="section-eyebrow">
+              NOTES
+            </span>
+
+            <h2>
+              Application Notes
+            </h2>
+
+          </div>
+
+        </div>
+
 
         @if (application.notes) {
 
-          <p class="notes">
-            {{ application.notes }}
-          </p>
+          <div class="notes-box">
+
+            <p class="notes">
+              {{ application.notes }}
+            </p>
+
+          </div>
 
         } @else {
 
-          <p class="empty-text">
-            No notes have been added for this application.
-          </p>
+          <div class="empty-content">
+
+            <span class="empty-icon">
+              —
+            </span>
+
+            <p class="empty-text">
+              No notes have been added for this application.
+            </p>
+
+          </div>
 
         }
 
-      </div>
+      </section>
 
 
-      <!-- Job Posting -->
+      <!-- =========================================
+           JOB POSTING
+           ========================================= -->
 
-      <div class="details-card">
+      <section class="details-card">
 
-        <h2>
-          Job Posting
-        </h2>
+        <div class="card-heading">
+
+          <div>
+
+            <span class="section-eyebrow">
+              SOURCE
+            </span>
+
+            <h2>
+              Job Posting
+            </h2>
+
+          </div>
+
+        </div>
+
 
         @if (application.jobUrl) {
 
@@ -174,21 +285,39 @@
             rel="noopener noreferrer"
             class="job-link"
           >
-            View Original Job Posting →
+
+            <span>
+              View Original Job Posting
+            </span>
+
+            <span class="external-icon">
+              ↗
+            </span>
+
           </a>
 
         } @else {
 
-          <p class="empty-text">
-            No job posting URL was added.
-          </p>
+          <div class="empty-content">
+
+            <span class="empty-icon">
+              —
+            </span>
+
+            <p class="empty-text">
+              No job posting URL was added.
+            </p>
+
+          </div>
 
         }
 
-      </div>
+      </section>
 
 
-      <!-- Actions -->
+      <!-- =========================================
+           ACTIONS
+           ========================================= -->
 
       <div class="details-actions">
 
@@ -211,11 +340,23 @@
 
       </div>
 
-    </div>
+    </main>
 
   } @else {
 
+    <!-- =========================================
+         NOT FOUND
+         ========================================= -->
+
     <div class="not-found">
+
+      <div class="not-found-icon">
+        ?
+      </div>
+
+      <span class="page-eyebrow">
+        APPLICATION
+      </span>
 
       <h1>
         Application Not Found

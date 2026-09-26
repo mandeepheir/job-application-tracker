@@ -1,29 +1,46 @@
 import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import {
+  FormsModule
+} from '@angular/forms';
+
+import {
+  Router,
+  RouterLink
+} from '@angular/router';
 
 import { AuthService } from '../../services/auth';
 
 @Component({
   selector: 'app-login',
-  imports: [FormsModule],
-  templateUrl: './login.html'
+
+  imports: [
+    FormsModule,
+    RouterLink
+  ],
+
+  templateUrl: './login.html',
+
+  styleUrl: './login.css'
 })
 export class Login {
 
   email = '';
+
   password = '';
 
   errorMessage = '';
+
 
   constructor(
     private authService: AuthService,
     private router: Router
   ) {}
 
+
   async login() {
 
     this.errorMessage = '';
+
 
     if (!this.email || !this.password) {
 
@@ -34,6 +51,7 @@ export class Login {
 
     }
 
+
     try {
 
       await this.authService.login(
@@ -41,16 +59,20 @@ export class Login {
         this.password
       );
 
+
       await this.router.navigate([
-        '/'
+        '/dashboard'
       ]);
 
-    } catch (error: any) {
+    }
+
+    catch (error: any) {
 
       console.error(
         'Login error:',
         error
       );
+
 
       this.errorMessage =
         'Invalid email or password.';

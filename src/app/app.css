@@ -1,66 +1,298 @@
+
+/* =========================================================
+   JOBTRACK NAVBAR
+   ========================================================= */
+
 .navbar {
-  background: #ffffff;
-  border-bottom: 1px solid #e5e7eb;
   position: sticky;
   top: 0;
   z-index: 100;
+
+  background: rgba(255, 255, 255, 0.94);
+
+  border-bottom: 1px solid #e5e7eb;
+
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 }
+
+
+/* =========================================================
+   NAVBAR CONTAINER
+   ========================================================= */
 
 .navbar-container {
   max-width: 1200px;
+  min-height: 72px;
+
   margin: 0 auto;
-  padding: 16px 32px;
+  padding: 0 32px;
 
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
+
+  gap: 32px;
 }
 
+
+/* =========================================================
+   LOGO
+   ========================================================= */
+
 .logo {
-  font-size: 22px;
-  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+
   color: #111827;
+
+  font-size: 21px;
+  font-weight: 750;
+  letter-spacing: -0.4px;
+
   text-decoration: none;
+
+  transition:
+    color 0.2s ease,
+    transform 0.2s ease;
 }
+
+.logo:hover {
+  color: #2563eb;
+  transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   NAVIGATION LINKS
+   ========================================================= */
 
 .nav-links {
   display: flex;
   align-items: center;
-  gap: 24px;
+
+  gap: 4px;
 }
 
+
+/* Individual links */
+
 .nav-links a {
+  position: relative;
+
+  display: inline-flex;
+  align-items: center;
+
+  min-height: 40px;
+
+  padding: 0 12px;
+
+  border-radius: 8px;
+
   color: #6b7280;
-  text-decoration: none;
+
+  font-size: 14px;
   font-weight: 500;
-  transition: color 0.2s ease;
+
+  text-decoration: none;
+
+  transition:
+    color 0.2s ease,
+    background-color 0.2s ease;
 }
+
+
+/* Hover */
 
 .nav-links a:hover {
   color: #111827;
+  background: #f3f4f6;
 }
+
+
+/* Active */
 
 .nav-links a.active {
   color: #111827;
+  background: #f3f4f6;
+
   font-weight: 600;
 }
 
-.main-content {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 32px;
-}
+
+/* =========================================================
+   LOGOUT BUTTON
+   ========================================================= */
 
 .logout-button {
-  border: none;
-  background: transparent;
-  color: #6b7280;
+  min-height: 40px;
+
+  margin-left: 8px;
+  padding: 0 14px;
+
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+
+  background: #ffffff;
+
+  color: #4b5563;
+
   font: inherit;
-  font-weight: 500;
+  font-size: 14px;
+  font-weight: 600;
+
   cursor: pointer;
-  padding: 0;
+
+  transition:
+    color 0.2s ease,
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
 }
+
 
 .logout-button:hover {
   color: #111827;
+
+  background: #f9fafb;
+
+  border-color: #d1d5db;
+
+  box-shadow:
+    0 2px 6px rgba(15, 23, 42, 0.06);
 }
+
+
+.logout-button:active {
+  transform: translateY(1px);
+}
+
+
+/* =========================================================
+   MAIN CONTENT
+   ========================================================= */
+
+.main-content {
+  width: 100%;
+  max-width: 1200px;
+
+  margin: 0 auto;
+
+  padding: 32px;
+}
+
+
+/* =========================================================
+   RESPONSIVE NAVBAR
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+  .navbar-container {
+    padding: 0 20px;
+
+    gap: 16px;
+  }
+
+  .nav-links {
+    gap: 2px;
+  }
+
+  .nav-links a {
+    padding: 0 9px;
+  }
+
+  .logout-button {
+    margin-left: 4px;
+    padding: 0 11px;
+  }
+
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 700px) {
+
+  .navbar-container {
+    min-height: auto;
+
+    padding: 14px 18px;
+
+    flex-direction: column;
+    align-items: stretch;
+
+    gap: 12px;
+  }
+
+  .logo {
+    justify-content: center;
+  }
+
+  .nav-links {
+    width: 100%;
+
+    display: flex;
+
+    overflow-x: auto;
+
+    padding-bottom: 2px;
+
+    scrollbar-width: none;
+  }
+
+  .nav-links::-webkit-scrollbar {
+    display: none;
+  }
+
+  .nav-links a {
+    flex: 0 0 auto;
+
+    min-height: 38px;
+
+    font-size: 13px;
+  }
+
+  .logout-button {
+    flex: 0 0 auto;
+
+    min-height: 38px;
+  }
+
+  .main-content {
+    padding: 24px 18px;
+  }
+
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 480px) {
+
+  .navbar-container {
+    padding: 12px 14px;
+  }
+
+  .nav-links a {
+    padding: 0 8px;
+
+    font-size: 12px;
+  }
+
+  .logout-button {
+    padding: 0 10px;
+
+    font-size: 13px;
+  }
+
+  .main-content {
+    padding: 20px 14px;
+  }
+
+}
+

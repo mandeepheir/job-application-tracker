@@ -3,25 +3,15 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 interface AnalysisResult {
-
   skills: string[];
-
   keywords: string[];
-
   resumeKeywords: string[];
-
   experience: string;
-
   responsibilities: string[];
-
   matchedSkills: string[];
-
   missingSkills: string[];
-
   recommendedLearning: string[];
-
   matchScore: number;
-
 }
 
 @Component({
@@ -37,6 +27,8 @@ export class AiAnalyzer {
   analysisResult: AnalysisResult | null = null;
 
   analyzing = false;
+
+  errorMessage = '';
 
 
   /*
@@ -269,242 +261,262 @@ export class AiAnalyzer {
 
   analyzeJob() {
 
+    this.errorMessage = '';
+
     if (!this.jobDescription.trim()) {
-
       return;
-
     }
 
     this.analyzing = true;
 
+    this.analysisResult = null;
+
 
     setTimeout(() => {
 
-      const text =
-        this.jobDescription.toLowerCase();
+      try {
+
+        const text =
+          this.jobDescription.toLowerCase();
 
 
-      /*
-       * Detect technical skills.
-       */
+        /*
+         * Detect technical skills.
+         */
 
-      const possibleSkills = [
+        const possibleSkills = [
 
-        'javascript',
-        'typescript',
-        'angular',
-        'react',
-        'vue',
-        'html',
-        'css',
-        'python',
-        'java',
-        'c++',
-        'c#',
-        'sql',
-        'mongodb',
-        'firebase',
-        'node.js',
-        'node',
-        'express',
-        'git',
-        'github',
-        'docker',
-        'kubernetes',
-        'aws',
-        'azure',
-        'gcp',
-        'machine learning',
-        'artificial intelligence',
-        'ai',
-        'data structures',
-        'algorithms',
-        'rest api',
-        'api',
-        'spring boot'
+          'javascript',
+          'typescript',
+          'angular',
+          'react',
+          'vue',
+          'html',
+          'css',
+          'python',
+          'java',
+          'c++',
+          'c#',
+          'sql',
+          'mongodb',
+          'firebase',
+          'node.js',
+          'node',
+          'express',
+          'git',
+          'github',
+          'docker',
+          'kubernetes',
+          'aws',
+          'azure',
+          'gcp',
+          'machine learning',
+          'artificial intelligence',
+          'ai',
+          'data structures',
+          'algorithms',
+          'rest api',
+          'api',
+          'spring boot'
 
-      ];
-
-
-      const foundSkills =
-        possibleSkills.filter(
-          skill =>
-            text.includes(skill)
-        );
+        ];
 
 
-      /*
-       * Detect important keywords.
-       */
-
-      const possibleKeywords = [
-
-        'software development',
-        'full stack',
-        'frontend',
-        'backend',
-        'web development',
-        'problem solving',
-        'teamwork',
-        'communication',
-        'agile',
-        'scrum',
-        'testing',
-        'debugging',
-        'cloud',
-        'database',
-        'deployment',
-        'performance',
-        'scalable',
-        'responsive design'
-
-      ];
-
-
-      const foundKeywords =
-        possibleKeywords.filter(
-          keyword =>
-            text.includes(keyword)
-        );
-
-
-      /*
-       * Detect resume keywords.
-       */
-
-      const resumeKeywords =
-        this.possibleResumeKeywords.filter(
-          keyword =>
-            text.includes(keyword)
-        );
-
-
-      /*
-       * Detect experience.
-       */
-
-      const experienceMatch =
-        this.jobDescription.match(
-          /(\d+\+?\s*(?:years?|yrs?))\s*(?:of\s*)?(?:experience|exp)/i
-        );
-
-
-      const experience =
-        experienceMatch
-          ? experienceMatch[1]
-          : 'Not specified';
-
-
-      /*
-       * Extract responsibilities.
-       */
-
-      const responsibilities =
-        this.extractResponsibilities(
-          this.jobDescription
-        );
-
-
-      /*
-       * Find matching skills.
-       */
-
-      const matchedSkills =
-        foundSkills.filter(
-          skill =>
-            this.mySkills.includes(skill)
-        );
-
-
-      /*
-       * Find missing skills.
-       */
-
-      const missingSkills =
-        foundSkills.filter(
-          skill =>
-            !this.mySkills.includes(skill)
-        );
-
-
-      /*
-       * Create learning recommendations.
-       */
-
-      const recommendedLearning =
-        missingSkills
-
-          .map(
+        const foundSkills =
+          possibleSkills.filter(
             skill =>
-              this.learningRecommendations[skill]
-          )
-
-          .filter(
-            recommendation =>
-              !!recommendation
+              text.includes(skill)
           );
 
 
-      /*
-       * Calculate match score.
-       */
+        /*
+         * Detect important keywords.
+         */
 
-      let matchScore = 0;
+        const possibleKeywords = [
+
+          'software development',
+          'full stack',
+          'frontend',
+          'backend',
+          'web development',
+          'problem solving',
+          'teamwork',
+          'communication',
+          'agile',
+          'scrum',
+          'testing',
+          'debugging',
+          'cloud',
+          'database',
+          'deployment',
+          'performance',
+          'scalable',
+          'responsive design'
+
+        ];
 
 
-      if (foundSkills.length > 0) {
-
-        matchScore =
-          Math.round(
-            (
-              matchedSkills.length /
-              foundSkills.length
-            ) * 100
+        const foundKeywords =
+          possibleKeywords.filter(
+            keyword =>
+              text.includes(keyword)
           );
+
+
+        /*
+         * Detect resume keywords.
+         */
+
+        const resumeKeywords =
+          this.possibleResumeKeywords.filter(
+            keyword =>
+              text.includes(keyword)
+          );
+
+
+        /*
+         * Detect experience.
+         */
+
+        const experienceMatch =
+          this.jobDescription.match(
+            /(\d+\+?\s*(?:years?|yrs?))\s*(?:of\s*)?(?:experience|exp)/i
+          );
+
+
+        const experience =
+          experienceMatch
+            ? experienceMatch[1]
+            : 'Not specified';
+
+
+        /*
+         * Extract responsibilities.
+         */
+
+        const responsibilities =
+          this.extractResponsibilities(
+            this.jobDescription
+          );
+
+
+        /*
+         * Find matching skills.
+         */
+
+        const matchedSkills =
+          foundSkills.filter(
+            skill =>
+              this.mySkills.includes(skill)
+          );
+
+
+        /*
+         * Find missing skills.
+         */
+
+        const missingSkills =
+          foundSkills.filter(
+            skill =>
+              !this.mySkills.includes(skill)
+          );
+
+
+        /*
+         * Create learning recommendations.
+         */
+
+        const recommendedLearning =
+          missingSkills
+
+            .map(
+              skill =>
+                this.learningRecommendations[skill]
+            )
+
+            .filter(
+              recommendation =>
+                !!recommendation
+            );
+
+
+        /*
+         * Calculate match score.
+         */
+
+        let matchScore = 0;
+
+
+        if (foundSkills.length > 0) {
+
+          matchScore =
+            Math.round(
+              (
+                matchedSkills.length /
+                foundSkills.length
+              ) * 100
+            );
+
+        }
+
+
+        /*
+         * Store results.
+         */
+
+        this.analysisResult = {
+
+          skills:
+            foundSkills.length > 0
+              ? foundSkills
+              : ['No specific skills detected'],
+
+          keywords:
+            foundKeywords.length > 0
+              ? foundKeywords
+              : ['No specific keywords detected'],
+
+          resumeKeywords:
+            resumeKeywords.length > 0
+              ? resumeKeywords
+              : ['No relevant resume keywords detected'],
+
+          experience,
+
+          responsibilities:
+            responsibilities.length > 0
+              ? responsibilities
+              : ['No responsibilities detected'],
+
+          matchedSkills,
+
+          missingSkills,
+
+          recommendedLearning,
+
+          matchScore
+
+        };
+
+
+      } catch (error) {
+
+        console.error(
+          'Error analyzing job description:',
+          error
+        );
+
+        this.errorMessage =
+          'We could not analyze this job description. Please try again.';
+
+        this.analysisResult = null;
+
+      } finally {
+
+        this.analyzing = false;
 
       }
-
-
-      /*
-       * Store results.
-       */
-
-      this.analysisResult = {
-
-        skills:
-          foundSkills.length > 0
-            ? foundSkills
-            : ['No specific skills detected'],
-
-        keywords:
-          foundKeywords.length > 0
-            ? foundKeywords
-            : ['No specific keywords detected'],
-
-        resumeKeywords:
-          resumeKeywords.length > 0
-            ? resumeKeywords
-            : ['No relevant resume keywords detected'],
-
-        experience,
-
-        responsibilities:
-          responsibilities.length > 0
-            ? responsibilities
-            : ['No responsibilities detected'],
-
-        matchedSkills,
-
-        missingSkills,
-
-        recommendedLearning,
-
-        matchScore
-
-      };
-
-
-      this.analyzing = false;
 
     }, 700);
 
@@ -586,6 +598,8 @@ export class AiAnalyzer {
     this.jobDescription = '';
 
     this.analysisResult = null;
+
+    this.errorMessage = '';
 
   }
 

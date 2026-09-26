@@ -87,6 +87,8 @@ export class Settings implements OnInit {
 
     if (!savedSettings) {
 
+      this.applyCompactMode();
+
       return;
 
     }
@@ -115,6 +117,22 @@ export class Settings implements OnInit {
 
     }
 
+    this.applyCompactMode();
+
+  }
+
+
+  /*
+   * Apply compact mode to the page.
+   */
+
+  private applyCompactMode() {
+
+    document.body.classList.toggle(
+      'compact-mode',
+      this.settings.compactMode === true
+    );
+
   }
 
 
@@ -133,6 +151,8 @@ export class Settings implements OnInit {
       )
 
     );
+
+    this.applyCompactMode();
 
     this.saved = true;
 

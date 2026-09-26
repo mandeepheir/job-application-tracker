@@ -1,13 +1,24 @@
+
 <div class="applications-page">
 
-  <div class="page-header">
+  <!-- =========================================
+       PAGE HEADER
+       ========================================= -->
 
-    <div>
+  <header class="page-header">
 
-      <h1>Applications</h1>
+    <div class="page-heading">
+
+      <span class="page-eyebrow">
+        JOB SEARCH
+      </span>
+
+      <h1>
+        Applications
+      </h1>
 
       <p>
-        Manage and track your job applications.
+        Track and manage your job applications.
       </p>
 
     </div>
@@ -16,139 +27,193 @@
       routerLink="/add-application"
       class="add-button"
     >
-      + Add Application
+      <span class="add-button-icon">+</span>
+      Add Application
     </a>
 
-  </div>
+  </header>
 
 
-  <!-- Filters -->
+  <!-- =========================================
+       FILTERS
+       ========================================= -->
 
-  <div class="filters">
+  <section class="filters-card">
 
-    <div class="search-box">
+    <div class="search-wrapper">
 
-      <label for="search">
-        Search
-      </label>
+      <span class="search-icon">
+        ⌕
+      </span>
 
       <input
-        id="search"
         type="text"
-        placeholder="Search company or job title..."
         [(ngModel)]="searchTerm"
         (ngModelChange)="filterApplications()"
+        placeholder="Search company or job title..."
+        class="search-input"
       />
 
     </div>
 
 
-    <div class="filter-box">
+    <select
+      [(ngModel)]="selectedStatus"
+      (ngModelChange)="filterApplications()"
+      class="filter-select"
+    >
 
-      <label for="statusFilter">
-        Status
-      </label>
+      <option value="">
+        All Statuses
+      </option>
 
-      <select
-        id="statusFilter"
-        [(ngModel)]="selectedStatus"
-        (ngModelChange)="filterApplications()"
-      >
+      <option value="Applied">
+        Applied
+      </option>
 
-        <option value="">
-          All Statuses
-        </option>
+      <option value="Interview">
+        Interview
+      </option>
 
-        <option value="Applied">
-          Applied
-        </option>
+      <option value="Technical">
+        Technical
+      </option>
 
-        <option value="Interview">
-          Interview
-        </option>
+      <option value="Offer">
+        Offer
+      </option>
 
-        <option value="Technical">
-          Technical Interview
-        </option>
+      <option value="Rejected">
+        Rejected
+      </option>
 
-        <option value="Offer">
-          Offer
-        </option>
-
-        <option value="Rejected">
-          Rejected
-        </option>
-
-      </select>
-
-    </div>
+    </select>
 
 
-    <div class="filter-box">
+    <select
+      [(ngModel)]="selectedJobType"
+      (ngModelChange)="filterApplications()"
+      class="filter-select"
+    >
 
-      <label for="jobTypeFilter">
-        Job Type
-      </label>
+      <option value="">
+        All Job Types
+      </option>
 
-      <select
-        id="jobTypeFilter"
-        [(ngModel)]="selectedJobType"
-        (ngModelChange)="filterApplications()"
-      >
+      <option value="Full-time">
+        Full-time
+      </option>
 
-        <option value="">
-          All Job Types
-        </option>
+      <option value="Part-time">
+        Part-time
+      </option>
 
-        <option value="Full-time">
-          Full-time
-        </option>
+      <option value="Contract">
+        Contract
+      </option>
 
-        <option value="Part-time">
-          Part-time
-        </option>
+      <option value="Internship">
+        Internship
+      </option>
 
-        <option value="Internship">
-          Internship
-        </option>
+      <option value="Co-op">
+        Co-op
+      </option>
 
-        <option value="Contract">
-          Contract
-        </option>
-
-      </select>
-
-    </div>
+    </select>
 
 
     <button
       type="button"
-      class="clear-button"
+      class="clear-filter-button"
       (click)="clearFilters()"
     >
-      Clear Filters
+      Clear
     </button>
 
-  </div>
+  </section>
 
 
-  <!-- No applications -->
+  <!-- =========================================
+       LOADING
+       ========================================= -->
 
-  @if (applications.length === 0) {
+  @if (loading) {
 
-    <div class="empty-state">
+    <div class="state-card">
+
+      <div class="spinner"></div>
+
+      <h2>
+        Loading applications...
+      </h2>
+
+      <p>
+        Please wait while we retrieve your applications.
+      </p>
+
+    </div>
+
+  }
+
+
+  <!-- =========================================
+       ERROR
+       ========================================= -->
+
+  @else if (errorMessage) {
+
+    <div class="state-card error-state">
+
+      <div class="state-icon">
+        !
+      </div>
+
+      <h2>
+        Something went wrong
+      </h2>
+
+      <p>
+        {{ errorMessage }}
+      </p>
+
+      <button
+        type="button"
+        class="retry-button"
+        (click)="loadApplications()"
+      >
+        Try Again
+      </button>
+
+    </div>
+
+  }
+
+
+  <!-- =========================================
+       EMPTY
+       ========================================= -->
+
+  @else if (applications.length === 0) {
+
+    <div class="state-card empty-state">
+
+      <div class="state-icon">
+        +
+      </div>
 
       <h2>
         No applications yet
       </h2>
 
       <p>
-        Start tracking your job search by adding your first application.
+        Start tracking your job search by adding
+        your first application.
       </p>
 
       <a
         routerLink="/add-application"
-        class="add-button"
+        class="empty-state-button"
       >
         Add Your First Application
       </a>
@@ -158,14 +223,17 @@
   }
 
 
-  <!-- No matching applications -->
+  <!-- =========================================
+       NO RESULTS
+       ========================================= -->
 
-  @if (
-    applications.length > 0 &&
-    filteredApplications.length === 0
-  ) {
+  @else if (filteredApplications.length === 0) {
 
-    <div class="empty-state">
+    <div class="state-card">
+
+      <div class="state-icon">
+        ?
+      </div>
 
       <h2>
         No matching applications
@@ -177,7 +245,7 @@
 
       <button
         type="button"
-        class="clear-button"
+        class="retry-button"
         (click)="clearFilters()"
       >
         Clear Filters
@@ -188,36 +256,80 @@
   }
 
 
-  <!-- Applications -->
+  <!-- =========================================
+       APPLICATION RESULTS
+       ========================================= -->
 
-  @if (filteredApplications.length > 0) {
+  @else {
 
-    <div class="applications-list">
+    <div class="results-toolbar">
+
+      <span>
+        Showing
+        <strong>
+          {{ filteredApplications.length }}
+        </strong>
+        of
+        <strong>
+          {{ applications.length }}
+        </strong>
+        applications
+      </span>
+
+    </div>
+
+
+    <div class="applications-grid">
 
       @for (
         application of filteredApplications;
-        track application.id
+        track application.id;
+        let i = $index
       ) {
 
-        <div class="application-card">
+        <article class="application-card">
 
-          <!-- Header -->
+          <!-- Card Header -->
 
-          <div class="application-header">
+          <div class="card-header">
 
-            <div>
+            <div class="application-title-area">
 
-              <h2>
-                {{ application.jobTitle }}
-              </h2>
+              <div class="company-avatar">
+                {{ application.company.charAt(0).toUpperCase() }}
+              </div>
 
-              <p class="company">
-                {{ application.company }}
-              </p>
+              <div>
+
+                <h2>
+                  {{ application.jobTitle }}
+                </h2>
+
+                <p class="company-name">
+                  {{ application.company }}
+                </p>
+
+              </div>
 
             </div>
 
-            <span class="status">
+
+            <span
+              class="status-badge"
+              [class.status-applied]="
+                application.status === 'Applied'
+              "
+              [class.status-interview]="
+                application.status === 'Interview' ||
+                application.status === 'Technical'
+              "
+              [class.status-offer]="
+                application.status === 'Offer'
+              "
+              [class.status-rejected]="
+                application.status === 'Rejected'
+              "
+            >
               {{ application.status }}
             </span>
 
@@ -228,42 +340,114 @@
 
           <div class="application-details">
 
-            <p>
-              <strong>Location:</strong>
-              {{ application.location }}
-            </p>
+            @if (application.location) {
 
-            <p>
-              <strong>Job Type:</strong>
-              {{ application.jobType }}
-            </p>
+              <div class="detail-item">
 
-            <p>
-              <strong>Applied:</strong>
-              {{ application.applicationDate }}
-            </p>
-
-            @if (application.deadline) {
-
-              <p
-                [class]="getDeadlineClass(application.deadline)"
-              >
-
-                <strong>Deadline:</strong>
-                {{ application.deadline }}
-
-                <span class="deadline-status">
-                  {{ getDeadlineStatus(application.deadline) }}
+                <span class="detail-label">
+                  Location
                 </span>
 
-              </p>
+                <span class="detail-value">
+                  {{ application.location }}
+                </span>
+
+              </div>
 
             }
 
-            <p>
-              <strong>Priority:</strong>
-              {{ application.priority }}
-            </p>
+
+            @if (application.jobType) {
+
+              <div class="detail-item">
+
+                <span class="detail-label">
+                  Job Type
+                </span>
+
+                <span class="detail-value">
+                  {{ application.jobType }}
+                </span>
+
+              </div>
+
+            }
+
+
+            @if (application.applicationDate) {
+
+              <div class="detail-item">
+
+                <span class="detail-label">
+                  Applied
+                </span>
+
+                <span class="detail-value">
+                  {{ application.applicationDate }}
+                </span>
+
+              </div>
+
+            }
+
+
+            @if (application.deadline) {
+
+              <div
+                class="detail-item"
+                [class]="
+                  getDeadlineClass(
+                    application.deadline
+                  )
+                "
+              >
+
+                <span class="detail-label">
+                  Deadline
+                </span>
+
+                <span class="detail-value">
+
+                  {{ application.deadline }}
+
+                  @if (
+                    getDeadlineStatus(
+                      application.deadline
+                    )
+                  ) {
+
+                    <small>
+                      {{
+                        getDeadlineStatus(
+                          application.deadline
+                        )
+                      }}
+                    </small>
+
+                  }
+
+                </span>
+
+              </div>
+
+            }
+
+
+            @if (application.priority) {
+
+              <div class="detail-item">
+
+                <span class="detail-label">
+                  Priority
+                </span>
+
+                <span class="detail-value priority-value">
+                  {{ application.priority }}
+                </span>
+
+              </div>
+
+            }
 
           </div>
 
@@ -274,7 +458,9 @@
 
             <div class="notes">
 
-              <strong>Notes:</strong>
+              <span class="notes-label">
+                Notes
+              </span>
 
               <p>
                 {{ application.notes }}
@@ -287,35 +473,23 @@
 
           <!-- Actions -->
 
-          <div class="application-actions">
+          <div class="card-actions">
 
             <a
               [routerLink]="[
                 '/applications',
                 application.id
               ]"
-              class="details-button"
+              class="view-button"
             >
               View Details
             </a>
 
 
-            @if (application.jobUrl) {
-
-              <a
-                [href]="application.jobUrl"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="job-link"
-              >
-                View Job Posting
-              </a>
-
-            }
-
-
             <a
-              [routerLink]="['/add-application']"
+              [routerLink]="[
+                '/add-application'
+              ]"
               [queryParams]="{
                 edit: application.id
               }"
@@ -328,14 +502,14 @@
             <button
               type="button"
               class="delete-button"
-              (click)="deleteApplication($index)"
+              (click)="deleteApplication(i)"
             >
               Delete
             </button>
 
           </div>
 
-        </div>
+        </article>
 
       }
 
@@ -344,3 +518,4 @@
   }
 
 </div>
+

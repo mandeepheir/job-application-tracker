@@ -1,36 +1,52 @@
-
 <div class="ai-analyzer-page">
 
-  <div class="page-header">
+  <!-- =====================================================
+       PAGE HEADER
+       ===================================================== -->
 
-    <div>
+  <header class="page-header">
+
+    <div class="header-content">
+
+      <span class="page-eyebrow">
+        JOB INTELLIGENCE
+      </span>
 
       <h1>
         AI Job Description Analyzer
       </h1>
 
       <p>
-        Analyze a job description and identify
-        important skills, keywords and requirements.
+        Analyze a job description to identify important
+        skills, keywords, responsibilities and learning
+        requirements.
       </p>
 
     </div>
 
-  </div>
+  </header>
 
 
-  <div class="analyzer-card">
+  <!-- =====================================================
+       INPUT
+       ===================================================== -->
+
+  <section class="analyzer-card">
 
     <div class="card-header">
 
       <div>
 
+        <span class="section-eyebrow">
+          JOB DESCRIPTION
+        </span>
+
         <h2>
-          Job Description
+          Analyze a Job
         </h2>
 
         <p>
-          Paste the job description below.
+          Paste the complete job description below.
         </p>
 
       </div>
@@ -38,17 +54,26 @@
     </div>
 
 
-    <textarea
-      [(ngModel)]="jobDescription"
-      placeholder="Paste the complete job description here..."
-      rows="14"
-    ></textarea>
+    <div class="textarea-wrapper">
+
+      <textarea
+        [(ngModel)]="jobDescription"
+        placeholder="Paste the complete job description here..."
+        rows="14"
+        [disabled]="analyzing"
+      ></textarea>
+
+      <span class="character-count">
+        {{ jobDescription.length }} characters
+      </span>
+
+    </div>
 
 
     <div class="input-actions">
 
-      <span class="character-count">
-        {{ jobDescription.length }} characters
+      <span class="input-hint">
+        Include the full description for a more complete analysis.
       </span>
 
 
@@ -58,6 +83,7 @@
           type="button"
           class="clear-button"
           (click)="clearAnalyzer()"
+          [disabled]="analyzing"
         >
           Clear
         </button>
@@ -75,9 +101,15 @@
 
           @if (analyzing) {
 
+            <span class="button-spinner"></span>
+
             Analyzing...
 
           } @else {
+
+            <span class="analyze-icon">
+              ✦
+            </span>
 
             Analyze Job
 
@@ -89,49 +121,150 @@
 
     </div>
 
-  </div>
+  </section>
 
 
-  @if (analysisResult) {
+  <!-- =====================================================
+       LOADING STATE
+       ===================================================== -->
 
-    <div class="results-section">
+  @if (analyzing) {
+
+    <div class="analyzer-state loading-state">
+
+      <div class="analyzer-spinner"></div>
+
+      <span class="state-eyebrow">
+        ANALYSIS IN PROGRESS
+      </span>
+
+      <h2>
+        Analyzing job description...
+      </h2>
+
+      <p>
+        Identifying skills, keywords, responsibilities
+        and learning requirements.
+      </p>
+
+    </div>
+
+  }
 
 
-      <!-- Match Score -->
+  <!-- =====================================================
+       ERROR STATE
+       ===================================================== -->
+
+  @if (!analyzing && errorMessage) {
+
+    <div class="analyzer-state error-state">
+
+      <div class="state-icon">
+        !
+      </div>
+
+      <span class="state-eyebrow">
+        ANALYSIS ERROR
+      </span>
+
+      <h2>
+        Analysis failed
+      </h2>
+
+      <p>
+        {{ errorMessage }}
+      </p>
+
+      <button
+        type="button"
+        class="retry-button"
+        (click)="analyzeJob()"
+        [disabled]="!jobDescription.trim()"
+      >
+        Try Again
+      </button>
+
+    </div>
+
+  }
+
+
+  <!-- =====================================================
+       RESULTS
+       ===================================================== -->
+
+  @if (
+    !analyzing &&
+    !errorMessage &&
+    analysisResult
+  ) {
+
+    <section class="results-section">
+
+
+      <!-- =================================================
+           MATCH SCORE
+           ================================================= -->
 
       <div class="match-score-card">
 
-        <h3>
-          Job Match Score
-        </h3>
+        <div class="score-content">
+
+          <div>
+
+            <span class="section-eyebrow">
+              COMPATIBILITY
+            </span>
+
+            <h2>
+              Job Match Score
+            </h2>
+
+            <p>
+              Based on the skills detected in the
+              job description and your current skill set.
+            </p>
+
+          </div>
 
 
-        <div class="match-score">
+          <div class="match-score">
 
-          <span class="score-number">
-            {{ analysisResult.matchScore }}%
-          </span>
+            <span class="score-number">
+              {{ analysisResult.matchScore }}%
+            </span>
 
-          <span class="score-label">
-            Skill Match
-          </span>
+            <span class="score-label">
+              Skill Match
+            </span>
+
+          </div>
 
         </div>
 
       </div>
 
 
+      <!-- =================================================
+           RESULTS HEADER
+           ================================================= -->
+
       <div class="results-header">
 
         <div>
+
+          <span class="page-eyebrow">
+            ANALYSIS COMPLETE
+          </span>
 
           <h2>
             Analysis Results
           </h2>
 
           <p>
-            Important information detected from
-            the job description.
+            Important information detected from the
+            job description.
           </p>
 
         </div>
@@ -139,13 +272,31 @@
       </div>
 
 
-      <!-- Experience -->
+      <!-- =================================================
+           EXPERIENCE
+           ================================================= -->
 
       <div class="result-card">
 
-        <h3>
-          Experience Required
-        </h3>
+        <div class="result-card-header">
+
+          <div class="result-icon">
+            EXP
+          </div>
+
+          <div>
+
+            <h3>
+              Experience Required
+            </h3>
+
+            <p>
+              Experience level detected from the posting.
+            </p>
+
+          </div>
+
+        </div>
 
         <div class="experience-value">
           {{ analysisResult.experience }}
@@ -154,13 +305,32 @@
       </div>
 
 
-      <!-- Required Skills -->
+      <!-- =================================================
+           REQUIRED SKILLS
+           ================================================= -->
 
       <div class="result-card">
 
-        <h3>
-          Required Skills
-        </h3>
+        <div class="result-card-header">
+
+          <div class="result-icon">
+            SK
+          </div>
+
+          <div>
+
+            <h3>
+              Required Skills
+            </h3>
+
+            <p>
+              Technical skills identified in the job description.
+            </p>
+
+          </div>
+
+        </div>
+
 
         <div class="tag-list">
 
@@ -180,13 +350,32 @@
       </div>
 
 
-      <!-- Skills You Have -->
+      <!-- =================================================
+           SKILLS YOU HAVE
+           ================================================= -->
 
       <div class="result-card">
 
-        <h3>
-          Skills You Have
-        </h3>
+        <div class="result-card-header">
+
+          <div class="result-icon success-icon">
+            ✓
+          </div>
+
+          <div>
+
+            <h3>
+              Skills You Have
+            </h3>
+
+            <p>
+              Skills from the posting that match your current profile.
+            </p>
+
+          </div>
+
+        </div>
+
 
         @if (
           analysisResult.matchedSkills.length > 0
@@ -218,13 +407,33 @@
       </div>
 
 
-      <!-- Skills To Learn -->
+      <!-- =================================================
+           SKILLS TO LEARN
+           ================================================= -->
 
       <div class="result-card">
 
-        <h3>
-          Skills To Learn
-        </h3>
+        <div class="result-card-header">
+
+          <div class="result-icon warning-icon">
+            +
+          </div>
+
+          <div>
+
+            <h3>
+              Skills To Learn
+            </h3>
+
+            <p>
+              Skills detected in the posting that are not
+              currently matched.
+            </p>
+
+          </div>
+
+        </div>
+
 
         @if (
           analysisResult.missingSkills.length > 0
@@ -256,13 +465,32 @@
       </div>
 
 
-      <!-- Recommended Learning -->
+      <!-- =================================================
+           RECOMMENDED LEARNING
+           ================================================= -->
 
       <div class="result-card">
 
-        <h3>
-          Recommended Learning
-        </h3>
+        <div class="result-card-header">
+
+          <div class="result-icon">
+            ↗
+          </div>
+
+          <div>
+
+            <h3>
+              Recommended Learning
+            </h3>
+
+            <p>
+              Topics that can help close identified skill gaps.
+            </p>
+
+          </div>
+
+        </div>
+
 
         @if (
           analysisResult.recommendedLearning.length > 0
@@ -296,18 +524,33 @@
       </div>
 
 
-      <!-- Resume Keywords -->
+      <!-- =================================================
+           RESUME KEYWORDS
+           ================================================= -->
 
       <div class="result-card">
 
-        <h3>
-          Resume Keywords
-        </h3>
+        <div class="result-card-header">
 
-        <p class="result-description">
-          Consider using these terms in your resume
-          when they accurately describe your experience.
-        </p>
+          <div class="result-icon">
+            CV
+          </div>
+
+          <div>
+
+            <h3>
+              Resume Keywords
+            </h3>
+
+            <p>
+              Consider using these terms when they accurately
+              describe your experience.
+            </p>
+
+          </div>
+
+        </div>
+
 
         <div class="tag-list">
 
@@ -327,13 +570,32 @@
       </div>
 
 
-      <!-- Important Keywords -->
+      <!-- =================================================
+           IMPORTANT KEYWORDS
+           ================================================= -->
 
       <div class="result-card">
 
-        <h3>
-          Important Keywords
-        </h3>
+        <div class="result-card-header">
+
+          <div class="result-icon">
+            #
+          </div>
+
+          <div>
+
+            <h3>
+              Important Keywords
+            </h3>
+
+            <p>
+              Frequently relevant terms detected in the posting.
+            </p>
+
+          </div>
+
+        </div>
+
 
         <div class="tag-list">
 
@@ -353,13 +615,32 @@
       </div>
 
 
-      <!-- Responsibilities -->
+      <!-- =================================================
+           RESPONSIBILITIES
+           ================================================= -->
 
       <div class="result-card">
 
-        <h3>
-          Responsibilities
-        </h3>
+        <div class="result-card-header">
+
+          <div class="result-icon">
+            →
+          </div>
+
+          <div>
+
+            <h3>
+              Responsibilities
+            </h3>
+
+            <p>
+              Responsibilities identified from the posting.
+            </p>
+
+          </div>
+
+        </div>
+
 
         <ul class="responsibility-list">
 
@@ -380,9 +661,8 @@
       </div>
 
 
-    </div>
+    </section>
 
   }
 
 </div>
-

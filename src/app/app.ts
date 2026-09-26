@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+
+import { Component, OnInit } from '@angular/core';
 import {
   RouterOutlet,
   RouterLink,
@@ -18,12 +19,44 @@ import { AuthService } from './services/auth';
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
-export class App {
+export class App implements OnInit {
+
+  private readonly settingsKey = 'jobtrack-settings';
 
   constructor(
     private authService: AuthService,
     private router: Router
   ) {}
+
+  ngOnInit() {
+    this.applyCompactMode();
+  }
+
+  private applyCompactMode() {
+    const savedSettings =
+      localStorage.getItem(this.settingsKey);
+
+    if (!savedSettings) {
+      return;
+    }
+
+    try {
+      const settings = JSON.parse(savedSettings);
+
+      document.body.classList.toggle(
+        'compact-mode',
+        settings.compactMode === true
+      );
+
+    } catch (error) {
+
+      console.error(
+        'Error loading compact mode:',
+        error
+      );
+
+    }
+  }
 
   async logout() {
 
@@ -47,3 +80,4 @@ export class App {
   }
 
 }
+

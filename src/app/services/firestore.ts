@@ -1,8 +1,5 @@
-import {
-  Injectable,
-  Injector,
-  runInInjectionContext
-} from '@angular/core';
+
+import { Injectable } from '@angular/core';
 
 import {
   Firestore,
@@ -17,10 +14,17 @@ import {
 } from '@angular/fire/firestore';
 
 import {
-  Auth
+  Auth,
+  user
 } from '@angular/fire/auth';
 
-import { Observable } from 'rxjs';
+import {
+  Observable,
+  switchMap,
+  take,
+  firstValueFrom
+} from 'rxjs';
+
 import { Application } from '../models/application';
 
 @Injectable({
@@ -30,21 +34,22 @@ export class FirestoreService {
 
   constructor(
     private firestore: Firestore,
-    private injector: Injector,
     private auth: Auth
   ) {}
 
   getApplications(): Observable<Application[]> {
 
-    const user = this.auth.currentUser;
+    return user(this.auth).pipe(
 
-    if (!user) {
-      throw new Error('User is not logged in.');
-    }
+      take(1),
 
-    return runInInjectionContext(
-      this.injector,
-      () => {
+      switchMap(currentUser => {
+
+        if (!currentUser) {
+          throw new Error(
+            'User is not logged in.'
+          );
+        }
 
         const applicationsCollection =
           collection(
@@ -58,29 +63,48 @@ export class FirestoreService {
             where(
               'userId',
               '==',
-              user.uid
+              currentUser.uid
             )
           );
 
         return collectionData(
           applicationsQuery,
-          { idField: 'id' }
+          {
+            idField: 'id'
+          }
         ) as Observable<Application[]>;
 
-      }
-    );
+      })
 
+    );
   }
 
-  addApplication(
+
+  private async getCurrentUser() {
+
+    const currentUser =
+      await firstValueFrom(
+        user(this.auth).pipe(
+          take(1)
+        )
+      );
+
+    if (!currentUser) {
+      throw new Error(
+        'User is not logged in.'
+      );
+    }
+
+    return currentUser;
+  }
+
+
+  async addApplication(
     application: Application
   ) {
 
-    const user = this.auth.currentUser;
-
-    if (!user) {
-      throw new Error('User is not logged in.');
-    }
+    const currentUser =
+      await this.getCurrentUser();
 
     const applicationsCollection =
       collection(
@@ -90,7 +114,7 @@ export class FirestoreService {
 
     const applicationData = {
       ...application,
-      userId: user.uid
+      userId: currentUser.uid
     };
 
     delete applicationData.id;
@@ -99,19 +123,16 @@ export class FirestoreService {
       applicationsCollection,
       applicationData
     );
-
   }
 
-  updateApplication(
+
+  async updateApplication(
     id: string,
     application: Application
   ) {
 
-    const user = this.auth.currentUser;
-
-    if (!user) {
-      throw new Error('User is not logged in.');
-    }
+    const currentUser =
+      await this.getCurrentUser();
 
     const applicationDocument =
       doc(
@@ -121,7 +142,7 @@ export class FirestoreService {
 
     const applicationData = {
       ...application,
-      userId: user.uid
+      userId: currentUser.uid
     };
 
     delete applicationData.id;
@@ -130,18 +151,14 @@ export class FirestoreService {
       applicationDocument,
       applicationData
     );
-
   }
 
-  deleteApplication(
+
+  async deleteApplication(
     id: string
   ) {
 
-    const user = this.auth.currentUser;
-
-    if (!user) {
-      throw new Error('User is not logged in.');
-    }
+    await this.getCurrentUser();
 
     const applicationDocument =
       doc(
@@ -152,7 +169,7 @@ export class FirestoreService {
     return deleteDoc(
       applicationDocument
     );
-
   }
 
 }
+

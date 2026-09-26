@@ -1,3 +1,4 @@
+
 import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
@@ -15,30 +16,29 @@ export class Dashboard implements OnInit {
   applications: Application[] = [];
 
   totalApplications = 0;
-
   interviews = 0;
-
   offers = 0;
-
   rejected = 0;
-
   upcomingDeadlines = 0;
-
   overdueApplications = 0;
-
   highPriorityApplications = 0;
+
+  loading = true;
+  errorMessage = '';
 
   constructor(
     private firestoreService: FirestoreService
   ) {}
 
   ngOnInit() {
-
     this.loadApplications();
-
   }
 
   loadApplications() {
+
+    this.loading = true;
+
+    this.errorMessage = '';
 
     this.firestoreService
       .getApplications()
@@ -46,9 +46,12 @@ export class Dashboard implements OnInit {
 
         next: (applications) => {
 
-          this.applications = applications;
+          this.applications =
+            applications;
 
           this.calculateStats();
+
+          this.loading = false;
 
         },
 
@@ -58,6 +61,11 @@ export class Dashboard implements OnInit {
             'Error loading dashboard applications:',
             error
           );
+
+          this.loading = false;
+
+          this.errorMessage =
+            'We could not load your dashboard. Please check your connection and try again.';
 
         }
 
@@ -70,7 +78,6 @@ export class Dashboard implements OnInit {
     this.totalApplications =
       this.applications.length;
 
-
     this.interviews =
       this.applications.filter(
         application =>
@@ -78,20 +85,17 @@ export class Dashboard implements OnInit {
           application.status === 'Technical'
       ).length;
 
-
     this.offers =
       this.applications.filter(
         application =>
           application.status === 'Offer'
       ).length;
 
-
     this.rejected =
       this.applications.filter(
         application =>
           application.status === 'Rejected'
       ).length;
-
 
     this.upcomingDeadlines =
       this.applications.filter(
@@ -101,7 +105,6 @@ export class Dashboard implements OnInit {
           ) === 'Upcoming'
       ).length;
 
-
     this.overdueApplications =
       this.applications.filter(
         application =>
@@ -110,7 +113,6 @@ export class Dashboard implements OnInit {
           ) === 'Overdue'
       ).length;
 
-
     this.highPriorityApplications =
       this.applications.filter(
         application =>
@@ -118,7 +120,6 @@ export class Dashboard implements OnInit {
       ).length;
 
   }
-
 
   getDeadlineStatus(
     deadline: string
@@ -137,29 +138,25 @@ export class Dashboard implements OnInit {
       0
     );
 
-    const deadlineDate = new Date(
-      deadline + 'T00:00:00'
-    );
+    const deadlineDate =
+      new Date(
+        deadline + 'T00:00:00'
+      );
 
     if (deadlineDate < today) {
-
       return 'Overdue';
-
     }
 
     if (
       deadlineDate.getTime() ===
       today.getTime()
     ) {
-
       return 'Due Today';
-
     }
 
     return 'Upcoming';
 
   }
-
 
   getRecentApplications(): Application[] {
 
@@ -171,3 +168,4 @@ export class Dashboard implements OnInit {
   }
 
 }
+

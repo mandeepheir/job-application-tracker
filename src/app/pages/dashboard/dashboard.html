@@ -1,300 +1,402 @@
-<div class="dashboard">
 
-  <!-- Header -->
+@if (loading) {
 
-  <div class="dashboard-header">
+  <div class="dashboard-state">
+    <div class="dashboard-spinner"></div>
 
-    <div>
+    <h2>Loading dashboard...</h2>
 
-      <h1>Dashboard</h1>
+    <p>
+      Please wait while we retrieve your application data.
+    </p>
+  </div>
 
-      <p>
-        Track your job search and stay organized.
-      </p>
+}
 
+@else if (errorMessage) {
+
+  <div class="dashboard-state dashboard-error">
+
+    <div class="dashboard-state-icon">
+      !
     </div>
 
-    <a
-      routerLink="/add-application"
-      class="add-button"
+    <h2>Something went wrong</h2>
+
+    <p>
+      {{ errorMessage }}
+    </p>
+
+    <button
+      type="button"
+      class="dashboard-retry-button"
+      (click)="loadApplications()"
     >
-      + Add Application
-    </a>
+      Try Again
+    </button>
 
   </div>
 
+}
 
-  <!-- Statistics -->
+@else {
 
-  <div class="stats-grid">
+  <div class="dashboard">
 
-    <!-- Total Applications -->
+    <!-- =========================================
+         DASHBOARD HEADER
+         ========================================= -->
 
-    <div class="stat-card">
+    <header class="dashboard-header">
 
-      <div class="stat-icon">
-        📋
-      </div>
+      <div class="dashboard-heading">
 
-      <div>
+        <span class="dashboard-eyebrow">
+          JOB SEARCH OVERVIEW
+        </span>
 
-        <h2>
-          {{ totalApplications }}
-        </h2>
+        <h1>
+          Dashboard
+        </h1>
 
         <p>
-          Total Applications
+          Track your applications, deadlines, and
+          interview progress in one place.
         </p>
 
       </div>
 
-    </div>
-
-
-    <!-- Interviews -->
-
-    <div class="stat-card">
-
-      <div class="stat-icon">
-        📞
-      </div>
-
-      <div>
-
-        <h2>
-          {{ interviews }}
-        </h2>
-
-        <p>
-          Interviews
-        </p>
-
-      </div>
-
-    </div>
-
-
-    <!-- Offers -->
-
-    <div class="stat-card">
-
-      <div class="stat-icon">
-        🎯
-      </div>
-
-      <div>
-
-        <h2>
-          {{ offers }}
-        </h2>
-
-        <p>
-          Offers
-        </p>
-
-      </div>
-
-    </div>
-
-
-    <!-- Rejected -->
-
-    <div class="stat-card">
-
-      <div class="stat-icon">
-        ❌
-      </div>
-
-      <div>
-
-        <h2>
-          {{ rejected }}
-        </h2>
-
-        <p>
-          Rejected
-        </p>
-
-      </div>
-
-    </div>
-
-  </div>
-
-
-  <!-- Deadline Statistics -->
-
-  <div class="stats-grid deadline-stats">
-
-    <!-- Upcoming Deadlines -->
-
-    <div class="stat-card">
-
-      <div class="stat-icon">
-        📅
-      </div>
-
-      <div>
-
-        <h2>
-          {{ upcomingDeadlines }}
-        </h2>
-
-        <p>
-          Upcoming Deadlines
-        </p>
-
-      </div>
-
-    </div>
-
-
-    <!-- Overdue -->
-
-    <div class="stat-card">
-
-      <div class="stat-icon">
-        ⚠️
-      </div>
-
-      <div>
-
-        <h2>
-          {{ overdueApplications }}
-        </h2>
-
-        <p>
-          Overdue
-        </p>
-
-      </div>
-
-    </div>
-
-
-    <!-- High Priority -->
-
-    <div class="stat-card">
-
-      <div class="stat-icon">
-        🔥
-      </div>
-
-      <div>
-
-        <h2>
-          {{ highPriorityApplications }}
-        </h2>
-
-        <p>
-          High Priority
-        </p>
-
-      </div>
-
-    </div>
-
-  </div>
-
-
-  <!-- Recent Applications -->
-
-  <div class="dashboard-section">
-
-    <div class="section-header">
-
-      <div>
-
-        <h2>
-          Recent Applications
-        </h2>
-
-        <p>
-          Your latest job applications.
-        </p>
-
-      </div>
-
-      <a routerLink="/applications">
-        View All
+      <a
+        routerLink="/add-application"
+        class="add-button"
+      >
+        <span class="add-button-icon">+</span>
+        Add Application
       </a>
 
-    </div>
+    </header>
 
 
-    <!-- No applications -->
+    <!-- =========================================
+         MAIN STATISTICS
+         ========================================= -->
 
-    @if (applications.length === 0) {
+    <section class="stats-grid">
 
-      <div class="recent-empty">
+      <!-- Total -->
 
-        <h3>
-          No applications yet
-        </h3>
+      <div class="stat-card stat-total">
+
+        <div class="stat-card-top">
+
+          <div class="stat-icon">
+            📋
+          </div>
+
+          <span class="stat-label">
+            APPLICATIONS
+          </span>
+
+        </div>
+
+        <div class="stat-value">
+          {{ totalApplications }}
+        </div>
 
         <p>
-          Add your first job application to start
-          tracking your job search.
+          Total applications
         </p>
 
+      </div>
+
+
+      <!-- Interviews -->
+
+      <div class="stat-card stat-interviews">
+
+        <div class="stat-card-top">
+
+          <div class="stat-icon">
+            📞
+          </div>
+
+          <span class="stat-label">
+            INTERVIEWS
+          </span>
+
+        </div>
+
+        <div class="stat-value">
+          {{ interviews }}
+        </div>
+
+        <p>
+          Interview stages
+        </p>
+
+      </div>
+
+
+      <!-- Offers -->
+
+      <div class="stat-card stat-offers">
+
+        <div class="stat-card-top">
+
+          <div class="stat-icon">
+            🎯
+          </div>
+
+          <span class="stat-label">
+            OFFERS
+          </span>
+
+        </div>
+
+        <div class="stat-value">
+          {{ offers }}
+        </div>
+
+        <p>
+          Offers received
+        </p>
+
+      </div>
+
+
+      <!-- Rejected -->
+
+      <div class="stat-card stat-rejected">
+
+        <div class="stat-card-top">
+
+          <div class="stat-icon">
+            ❌
+          </div>
+
+          <span class="stat-label">
+            REJECTED
+          </span>
+
+        </div>
+
+        <div class="stat-value">
+          {{ rejected }}
+        </div>
+
+        <p>
+          Applications rejected
+        </p>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================================
+         DEADLINE STATISTICS
+         ========================================= -->
+
+    <section class="secondary-stats">
+
+      <div class="secondary-stat">
+
+        <div class="secondary-stat-icon">
+          📅
+        </div>
+
+        <div>
+          <strong>
+            {{ upcomingDeadlines }}
+          </strong>
+
+          <span>
+            Upcoming deadlines
+          </span>
+        </div>
+
+      </div>
+
+
+      <div class="secondary-stat secondary-danger">
+
+        <div class="secondary-stat-icon">
+          ⚠️
+        </div>
+
+        <div>
+          <strong>
+            {{ overdueApplications }}
+          </strong>
+
+          <span>
+            Overdue applications
+          </span>
+        </div>
+
+      </div>
+
+
+      <div class="secondary-stat secondary-priority">
+
+        <div class="secondary-stat-icon">
+          🔥
+        </div>
+
+        <div>
+          <strong>
+            {{ highPriorityApplications }}
+          </strong>
+
+          <span>
+            High priority
+          </span>
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================================
+         RECENT APPLICATIONS
+         ========================================= -->
+
+    <section class="dashboard-section">
+
+      <div class="section-header">
+
+        <div>
+
+          <span class="section-eyebrow">
+            ACTIVITY
+          </span>
+
+          <h2>
+            Recent Applications
+          </h2>
+
+          <p>
+            Your latest job applications.
+          </p>
+
+        </div>
+
         <a
-          routerLink="/add-application"
-          class="add-button"
+          routerLink="/applications"
+          class="view-all-link"
         >
-          Add Application
+          View All
+          <span>→</span>
         </a>
 
       </div>
 
-    }
 
+      <!-- Empty State -->
 
-    <!-- Recent applications -->
+      @if (applications.length === 0) {
 
-    @if (applications.length > 0) {
+        <div class="recent-empty">
 
-      <div class="recent-applications">
-
-        @for (
-          application of getRecentApplications();
-          track $index
-        ) {
-
-          <div class="recent-application-card">
-
-            <div>
-
-              <h3>
-                {{ application.jobTitle }}
-              </h3>
-
-              <p>
-                {{ application.company }}
-              </p>
-
-            </div>
-
-
-            <div class="recent-application-right">
-
-              <span class="status">
-                {{ application.status }}
-              </span>
-
-              <span class="job-type">
-                {{ application.jobType }}
-              </span>
-
-            </div>
-
+          <div class="empty-icon">
+            📋
           </div>
 
-        }
+          <h3>
+            No applications yet
+          </h3>
 
-      </div>
+          <p>
+            Start tracking your job search by
+            adding your first application.
+          </p>
 
-    }
+          <a
+            routerLink="/add-application"
+            class="add-button"
+          >
+            <span class="add-button-icon">+</span>
+            Add Application
+          </a>
+
+        </div>
+
+      }
+
+
+      <!-- Recent Applications -->
+
+      @if (applications.length > 0) {
+
+        <div class="recent-applications">
+
+          @for (
+            application of getRecentApplications();
+            track application.id
+          ) {
+
+            <div class="recent-application-card">
+
+              <div class="application-main">
+
+                <div class="company-avatar">
+                  {{ application.company.charAt(0).toUpperCase() }}
+                </div>
+
+                <div class="application-info">
+
+                  <h3>
+                    {{ application.jobTitle }}
+                  </h3>
+
+                  <p>
+                    {{ application.company }}
+                  </p>
+
+                </div>
+
+              </div>
+
+
+              <div class="recent-application-right">
+
+                <span
+                  class="status"
+                  [class.status-interview]="
+                    application.status === 'Interview' ||
+                    application.status === 'Technical'
+                  "
+                  [class.status-offer]="
+                    application.status === 'Offer'
+                  "
+                  [class.status-rejected]="
+                    application.status === 'Rejected'
+                  "
+                  [class.status-applied]="
+                    application.status === 'Applied'
+                  "
+                >
+                  {{ application.status }}
+                </span>
+
+                <span class="job-type">
+                  {{ application.jobType }}
+                </span>
+
+              </div>
+
+            </div>
+
+          }
+
+        </div>
+
+      }
+
+    </section>
 
   </div>
 
-</div>
+}
+
